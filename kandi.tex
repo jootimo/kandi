@@ -1,0 +1,38 @@
+\documentclass[a4paper,12pt, titlepage]{article}
+\usepackage{amssymb,amsthm,amsmath} %ams
+\usepackage[finnish]{babel} %suomenkielinen tavutus
+\usepackage[T1]{fontenc} %skanditavutus
+\usepackage[utf8]{inputenc}        	% skandit utf-8 koodauksella
+%\usepackage[ansinew]{inputenc}        	% skandit utf-8 koodauksella, kokeile tata, jos utf-8 ylla ei toimi.
+
+\usepackage{graphicx} %dokumentti sisaltaa kuvia
+
+\linespread{1.24} %rivivali 1.5
+\sloppy % Vahentaa tavutuksen tarvetta, "leventamalla" rivin keskella olevia valilyönteja.
+
+% Lauseille, maaritelmille ja muille vastaaville voidaan maaritella omat ymparistöt
+% jolloin niille saadaan yhtenainen ulkoasu
+\theoremstyle{definition}
+\newtheorem{maar}{Maaritelma}[section] %Numeroidaan maaritelmat yms lukukohtaisesti. Juoksevan numeroinnin saa jattamalla [section]-option pois
+\newtheorem{lemma}[maar]{Lemma} % Tassa ymparistö 'lemma' kayttaa laskuria 'maaritelma'
+%\newtheorem{lemma}{Lemma}[section] %Ymparistölle 'lemma' voitaisiin maaritella myös oma laskurinsa.
+\newtheorem{lause}[maar]{Lause}
+\newtheorem{esimerkki}[maar]{Esimerkki}
+
+% Yleisimmin kayttettaville komennoille voi maaritella lyhynnemerkintöja
+% esimerkiksi
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\abs}[1]{\vert #1 \vert} % Itseisarvo
+
+\title{Kolmiulotteisen avaruuden jakaminen aliavaruuksiin}
+\author{Timo Heinonen \\LuK-tutkielma \\ Turun yliopisto}
+\date{Lokakuu 2016}
+
+\begin{document}
+
+\maketitle
+
+\end{document}
