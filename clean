@@ -1,1 +1,1 @@
-rm kandi.aux kandi.pdf kandi.toc kandi.log missfont.log
+rm kandi.aux kandi.pdf kandi.toc kandi.log kandi.blg kandi.bbl

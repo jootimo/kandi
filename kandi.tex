@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc} %skanditavutus
 \usepackage[utf8]{inputenc}        	% skandit utf-8 koodauksella
 %\usepackage[ansinew]{inputenc}        	% skandit utf-8 koodauksella, kokeile tata, jos utf-8 ylla ei toimi.
+\usepackage{cite}
 
 \usepackage{graphicx} %dokumentti sisaltaa kuvia
 
@@ -71,7 +72,7 @@
 \code{
 FOREACH pikselinäytöllä \\*
 \tab FOREACH renderointiprimitiivi \\*
-\tab\tab ammu säde $O+tD$ kamerasta pikselin läpi avaruuteen \\*
+\tab\tab ammu säde $O+t\vec{D}$ kamerasta pikselin läpi avaruuteen \\*
 \tab\tab IF säde osui primitiiviin \\*
 \tab\tab\tab selvitä varjostus, valon heijastuminen, yms. \\*
 \tab\tab\tab aseta pikselin väri primitiivin väriseksi \\*
@@ -94,6 +95,11 @@ Sehän on: $O($se ny riippuu...$)$
 
 \section{Renderoinnin optimoiminen aliavaruuksien avulla}
 \subsection{Aliavaruuspuuta käyttävä rekursiivinen Ray-Tracing algoritmi}
+Viittaus\cite{ranta}, viittaus\cite{lengyel} ja viittaus\cite{janke}\cite{rules}\cite{fuchs}
+\cite{haines}\cite{sherrod}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
 
 
 \end{document}
