@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt, titlepage]{article}
+	\documentclass[a4paper,12pt, titlepage]{article}
 \usepackage{amssymb,amsthm,amsmath} %ams
 \usepackage[finnish]{babel} %suomenkielinen tavutus
 \usepackage[T1]{fontenc} %skanditavutus
@@ -8,7 +8,7 @@
 
 \usepackage{graphicx} %dokumentti sisaltaa kuvia
 
-\linespread{1.24} %rivivali 1.5
+\linespread{1.00} %1.24 olisi rivivali 1.5
 \sloppy % Vahentaa tavutuksen tarvetta, "leventamalla" rivin keskella olevia valilyönteja.
 
 % Lauseille, maaritelmille ja muille vastaaville voidaan maaritella omat ymparistöt
@@ -21,8 +21,6 @@
     {\newline}{}%
 \theoremstyle{break}
 \newtheorem{maar}{Maaritelma}[section] %Numeroidaan maaritelmat yms lukukohtaisesti. Juoksevan numeroinnin saa jattamalla [section]-option pois
-\newtheorem{lemma}[maar]{Lemma} % Tassa ymparistö 'lemma' kayttaa laskuria 'maaritelma'
-%\newtheorem{lemma}{Lemma}[section] %Ymparistölle 'lemma' voitaisiin maaritella myös oma laskurinsa.
 \newtheorem{lause}[maar]{Lause}
 \newtheorem{esimerkki}[maar]{Esimerkki}
 
@@ -38,18 +36,15 @@
 
 % Yleisimmin kayttettaville komennoille voi maaritella lyhynnemerkintöja
 % esimerkiksi
-\newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\C}{\mathbb{C}}
 \newcommand{\abs}[1]{\vert #1 \vert} % Itseisarvo
-\newcommand{\tab}[1][1cm]{\hspace*{#1}} % Sisennys
+\newcommand{\tab}[1][0.5cm]{\hspace*{#1}} % Sisennys
 \newcommand{\code}[1]{\texttt{#1}} % Monospace-fontti koodille
 %\newcommand{\kontr}[1]{\textbf{#1}} % Boldaus ei toimi \code:n sisällä :<
 
 
 
-\title{Kolmiulotteisen avaruuden jakaminen aliavaruuksiin}
+\title{Avaruusjako tietokonegrafiikassa}
 \author{Timo Heinonen \\LuK-tutkielma \\ tietojenkäsittelytiede \\ Turun yliopisto}
 \date{Lokakuu 2016}
 
@@ -65,38 +60,32 @@
 \textbf{Hello World!}
 
 \section{Tietokonegrafiikan peruskäsitteitä}
-\subsection{Avaruus $\R ^3$ ja objektit} 
-\subsection{Näkyvyysongelma}
+\subsection{Avaruus $\R ^3$, objektit ja polygonit} 
 \subsection{Ray-Tracing tekniikka}
 \begin{alg}[Ray-Tracing -algoritmi]
 \code{
-FOREACH pikselinäytöllä \\*
-\tab FOREACH renderointiprimitiivi \\*
-\tab\tab ammu säde $O+t\vec{D}$ kamerasta pikselin läpi avaruuteen \\*
-\tab\tab IF säde osui primitiiviin \\*
-\tab\tab\tab selvitä varjostus, valon heijastuminen, yms. \\*
-\tab\tab\tab aseta pikselin väri primitiivin väriseksi \\*
+FOREACH pikseli $(x, y)$ näytöllä \\*
+\tab FOREACH polygoni maisemassa\\*
+\tab\tab ammu säde $O+t\vec{D}$ kamerasta pikselin läpi maisemaan \\*
+\tab\tab IF säde osui polygoniin pisteessä $P$\\*
+\tab\tab\tab laske yhteen jokaisen valonlähteen aiheuttama \\*
+\tab\tab\tab varjostus pisteessä $P$  \\*
+\tab\tab\tab aseta pikselin $(x, y)$ väri varjostuksen mukaisesti \\*
 \tab\tab ELSE \\*
-\tab\tab\tab aseta pikselin väri taustan väriseksi \\*
+\tab\tab\tab aseta pikselin $(x, y)$ väri taustan väriseksi \\*
 \tab\tab ENDIF \\*
 \tab ENDFOR \\*
 ENDFOR\\*}
 \end{alg}
 
-\begin{lause}[Ray-Tracing algoritmin kompleksisuus]
-Sehän on: $O($se ny riippuu...$)$ 
-\end{lause}
-
-\section{Aliavaruushierarkiat}
+\section{Avaruusjakopuut}
 \subsection{Binary Space Partitioning}
-\textit{BSP}
 \subsection{Bounding Volume Hierarchy}
-\textit{BVH}
 
-\section{Renderoinnin optimoiminen aliavaruuksien avulla}
+\section{Renderoinnin optimoiminen avaruusjakopuiden avulla}
 \subsection{Aliavaruuspuuta käyttävä rekursiivinen Ray-Tracing algoritmi}
-Viittaus\cite{ranta}, viittaus\cite{lengyel} ja viittaus\cite{janke}\cite{rules}\cite{fuchs}
-\cite{haines}\cite{sherrod}
+Viittaus\cite{ranta}, viittaus\cite{hughes} ja viittaus\cite{janke}\cite{rules}\cite{fuchs}
+\cite{appel}\cite{samet}
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
