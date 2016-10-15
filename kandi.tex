@@ -1,12 +1,16 @@
-	\documentclass[a4paper,12pt, titlepage]{article}
+\documentclass[a4paper,12pt, titlepage]{article}
 \usepackage{amssymb,amsthm,amsmath} %ams
 \usepackage[finnish]{babel} %suomenkielinen tavutus
 \usepackage[T1]{fontenc} %skanditavutus
 \usepackage[utf8]{inputenc}        	% skandit utf-8 koodauksella
 %\usepackage[ansinew]{inputenc}        	% skandit utf-8 koodauksella, kokeile tata, jos utf-8 ylla ei toimi.
-\usepackage{cite}
-
 \usepackage{graphicx} %dokumentti sisaltaa kuvia
+\usepackage{cite}
+\usepackage[linesnumbered, boxed]{algorithm2e}
+%suomennoksia yo. paketille:
+\renewcommand*{\algorithmcfname}{Algoritmi}
+\renewcommand*{\listalgorithmcfname}{Lista algoritmeista}
+
 
 \linespread{1.00} %1.24 olisi rivivali 1.5
 \sloppy % Vahentaa tavutuksen tarvetta, "leventamalla" rivin keskella olevia valilyönteja.
@@ -28,7 +32,7 @@
 % En saanut tähän monospace fonttia. Alla on määritelty makro \code
 \newtheoremstyle{algostyle}
     {\topsep}{\topsep}%
-    {\normalfont}{}%
+    {\small}{}%
     {\bfseries}{}%
     {\newline}{}%
 \theoremstyle{algostyle}
@@ -54,6 +58,7 @@
 
 \setcounter{tocdepth}{2} %sisennys
 \tableofcontents
+\listofalgorithms
 
 \newpage
 \section{Johdanto}
@@ -62,21 +67,31 @@
 \section{Tietokonegrafiikan peruskäsitteitä}
 \subsection{Avaruus $\R ^3$, objektit ja polygonit} 
 \subsection{Ray-Tracing tekniikka}
-\begin{alg}[Ray-Tracing -algoritmi]
-\code{
-FOREACH pikseli $(x, y)$ näytöllä \\*
-\tab FOREACH polygoni maisemassa\\*
-\tab\tab ammu säde $O+t\vec{D}$ kamerasta pikselin läpi maisemaan \\*
-\tab\tab IF säde osui polygoniin pisteessä $P$\\*
-\tab\tab\tab laske yhteen jokaisen valonlähteen aiheuttama \\*
-\tab\tab\tab varjostus pisteessä $P$  \\*
-\tab\tab\tab aseta pikselin $(x, y)$ väri varjostuksen mukaisesti \\*
-\tab\tab ELSE \\*
-\tab\tab\tab aseta pikselin $(x, y)$ väri taustan väriseksi \\*
-\tab\tab ENDIF \\*
-\tab ENDFOR \\*
-ENDFOR\\*}
-\end{alg}
+
+\begin{algorithm}
+\KwIn{\\\emph{Kuvataso}: $x*y$ kokoinen taulukko pikseleitä \\
+\emph{Maisema}: joukko valonlähteitä ja polygoneihin jaettuja objekteja}
+\KwOut{\\Kolmiulotteinen maisema projisoituna kuvatasolle}
+\ForEach{pikseli $(x, y)$ näytöllä}{
+  \ForEach{polygoni maisemassa}{
+    Ammu säde $\vec{R} = O+t\vec{D_1}$ kamerasta pikselin läpi maisemaan \\
+    \eIf{säde osui polygoniin pisteessä $P$}{
+      \ForEach{Valonlähde $L$}{
+	Ammu varjostussäde $\vec{R}=L-P$ valonlähdettä kohti\\
+	Kasvata pisteeseen $P$ kohdistuvaa valosummaa               
+      }
+      Aseta pikselin $(x, y)$ väri valosumman mukaisesti
+    }{
+      Aseta pikseli $(x, y)$ taustan väriseksi
+    }
+  }
+}
+\caption{Ray-Tracing -algoritmi}\label{algo_raytrace}
+\end{algorithm}
+
+Ray-Tracing -tekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}\\
+
+Algoritmin suoritusta hidastaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman polygonit ja testattava osuuko säde niihin. Säteiden ja polygonien yhteistörmäyksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95\% koko laskenta-ajasta.\cite{whitted} Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien polygonien määrää jokaista sädettä kohti saataisiin vähennettyä. 
 
 \section{Avaruusjakopuut}
 \subsection{Binary Space Partitioning}
