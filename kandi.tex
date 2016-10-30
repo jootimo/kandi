@@ -1,18 +1,22 @@
 \documentclass[a4paper,12pt, titlepage]{article}
 \usepackage{amssymb,amsthm,amsmath} %ams
 \usepackage[finnish]{babel} %suomenkielinen tavutus
+\usepackage[fixlanguage]{babelbib}
+\selectbiblanguage{finnish}
+
 \usepackage[T1]{fontenc} %skanditavutus
-\usepackage[utf8]{inputenc}        	% skandit utf-8 koodauksella
+\usepackage[utf8x]{inputenc}        	% skandit utf-8 koodauksella
 %\usepackage[ansinew]{inputenc}        	% skandit utf-8 koodauksella, kokeile tata, jos utf-8 ylla ei toimi.
 \usepackage{graphicx} %dokumentti sisaltaa kuvia
 \usepackage{cite}
 \usepackage[linesnumbered, boxed]{algorithm2e}
+\usepackage{url}
 %suomennoksia yo. paketille:
 \renewcommand*{\algorithmcfname}{Algoritmi}
 \renewcommand*{\listalgorithmcfname}{Lista algoritmeista}
 
 
-\linespread{1.00} %1.24 olisi rivivali 1.5
+\linespread{1.24} %1.24 olisi rivivali 1.5
 \sloppy % Vahentaa tavutuksen tarvetta, "leventamalla" rivin keskella olevia valilyönteja.
 
 % Lauseille, maaritelmille ja muille vastaaville voidaan maaritella omat ymparistöt
@@ -28,25 +32,14 @@
 \newtheorem{lause}[maar]{Lause}
 \newtheorem{esimerkki}[maar]{Esimerkki}
 
-% Algoritmeille oma tyyli
-% En saanut tähän monospace fonttia. Alla on määritelty makro \code
-\newtheoremstyle{algostyle}
-    {\topsep}{\topsep}%
-    {\small}{}%
-    {\bfseries}{}%
-    {\newline}{}%
-\theoremstyle{algostyle}
-\newtheorem{alg}{Algoritmi}[section]
-
 % Yleisimmin kayttettaville komennoille voi maaritella lyhynnemerkintöja
 % esimerkiksi
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\abs}[1]{\vert #1 \vert} % Itseisarvo
 \newcommand{\tab}[1][0.5cm]{\hspace*{#1}} % Sisennys
 \newcommand{\code}[1]{\texttt{#1}} % Monospace-fontti koodille
-%\newcommand{\kontr}[1]{\textbf{#1}} % Boldaus ei toimi \code:n sisällä :<
 
-
+\setlength\parindent{0pt} %uuden kappaleen sisennys
 
 \title{Avaruusjako tietokonegrafiikassa}
 \author{Timo Heinonen \\LuK-tutkielma \\ tietojenkäsittelytiede \\ Turun yliopisto}
@@ -58,15 +51,32 @@
 
 \setcounter{tocdepth}{2} %sisennys
 \tableofcontents
-\listofalgorithms
 
 \newpage
 \section{Johdanto}
-\textbf{Hello World!}
 
-\section{Tietokonegrafiikan peruskäsitteitä}
-\subsection{Avaruus $\R ^3$, objektit ja polygonit} 
+Kolmiulotteinen tietokonegrafiikka on merkittävässä osassa animaatioelokuvissa, peleissä, sekä tietokoneavusteisessa suunnittelussa esimerkiksi arkktehtuurin ja teollisuuden alalla. Eräs aktiivinen tutkimuskohde on tietokonegrafiikan tekniikoiden soveltaminen konenäköön \cite{hughes} Tietokonegrafiikka on osin jopa syrjäyttämässä perinteistä valokuvaustyötä: huonekalujätti Ikea on siirtynyt käyttämään myyntikuvastoissaan valtaosin tietokoneella generoituja kuvia valokuvien sijaan.\cite{ikea}\\
+
+Kolmiulotteisen grafiikan piirtämistä kaksiulotteisiksi kuviksi kutsutaan renderoinniksi. Renderoinnin lähtökohtana on kuvattava maisema (engl. \emph{scene}), joka sisältää objekteja ja valonlähteitä. Objektit ja valonlähteet on voitava mallintaa matemaattisesti, jotta niille voidaan määrittää sijainti ja suuntaus, ja niiden välisiä etäisyyksiä ja suhteita voidaan laskea. Renderointi tapahtuu aina jostakin kuvakulmasta, ja tätä varten määritellään kamera, jolla on oma sijaintinsa ja suuntauksensa maisemassa. Tämän jälkeen on selvitettävä, mitkä objektit kamera näkee, miten objekteihin osuvat valonsäteet vaikuttavat niiden väriin ja kuvan varjostukseen, ja lopuksi, mitkä värit projisoidaan kuvatason mihinkin pikseliin.\cite{janke}\\
+
+Vaikka tietokoneiden, ja varsinkin grafiikkaprosessoreiden laskentateho kasvaa jatkuvasti, ei grafiikan tuottaminen ole suinkaan halpaa tai nopeaa. Kuvista halutaan jatkuvasti fotorealistisempia, ja yksityiskohtaisemmat kuvattavat mallit ja monimutkaiset valaisutekniikat vaativat erittäin paljon laskentatehoa. Esimerkiksi elokuvastudio Pixarin Monsterit-yliopisto -animaatioelokuvan piirtäminen vaati yli sata miljoonaa prosessorituntia.\cite{monsterit} Tämän takia renderoinnin nopeuttaminen on ollut aktiivinen tutkimuskohde jo pitkään.\\
+
+1960-luvulla tietokonegrafiikkaa käytettiin lähinnä teollisuuden komponenttisuunnittelussa ja arkkitehtuurissa. Tietokoneella osattiin piirtää objektien ääriviivoja (engl. \emph{wireframe}), mutta varjostustekniikoita ei tunnettu. IBM:n tutkija Arthur Appel esitteli algoritmin, joka laski suoran yhtälöitä kuvasta maisemaan ja siitä valonlähteisiin. Tämän tekniikan avulla voitiin piirtää yksinkertaisia varjostuksia, ja myöhemmin tästä Ray Tracing:iksi kutsutusta tekniikasta tuli erittäin suosittu.\cite{appel}\\
+
+Jo Appel totesi Ray Tracing -tekniikan olevan erittäin aikaavievä. Vuonna 1980 julkaistiin kaksi artikkelia, joissa esiteltiin tapoja nopeuttaa tätä tekniikkaa.\cite{fuchs} \cite{rubin} \\
+
+Tässä tutkielmassa esitellään avaruuden jakamiseen perustuvia tietorakenteita, joilla kolmiulotteisten kuvien renderointia voidaan nopeuttaa. Luvussa 2 määritellään joitakin grafiikan peruskäsitteitä, sekä esitetään algoritmi Ray Tracing -tekniikalle. Luvussa 3 tutkitaan Binary Space Partitioning -puuta, kd-puuta ja Bounding Volume -hierarkiaa, sekä niiden rakentamiseen ja läpikäyntiin liittyviä algoritmeja. Luvussa 4 selvitetään, miten kd-puuta voidaan käyttää optimoimaan Ray Tracing -algoritmia.
+
+
+
+\section{3D-grafiikan peruskäsitteitä}
+\subsection{Avaruus $\R^3$, objektit ja polygonit}
+
+%Objektit ovat geometrisesti määriteltyjä malleja, jotka koostuvat usein pienemmistä renderointiprimitiiveistä, joita grafiikkaprosessorit osaavat käsitellä erittäin nopeasti.\cite{angel} Maiseman renderoiminen vaatii paljon laskutoimituksia, sillä jokaisen renderointiprimitiivin suhde ja etäisyys kameraan, jokaiseen valonlähteeseen ja toisiinsa on selvitettävä. Lisäksi renderoinnin tulokseen vaikuttavat objektien pintojen sileys, heijastavuus ja läpinäkyvyys, sekä monet muut muuttujat \\
+
 \subsection{Ray-Tracing tekniikka}
+
+Eräs suosittu tapa renderoida tietokonegrafiikkaa on Ray Tracing -tekiikka. Ray Tracing:illa pyritään mallintamaan mahdollisimman tarkasti valon kulkemista avaruudessa, heijastumista objekteista sekä tietysti sitä, mitkä objektit piirretään mihinkin kohtaan kuvaa. \\
 
 \begin{algorithm}
 \KwIn{\\\emph{Kuvataso}: $x*y$ kokoinen taulukko pikseleitä \\
@@ -76,7 +86,7 @@
   \ForEach{polygoni maisemassa}{
     Ammu säde $\vec{R} = O+t\vec{D_1}$ kamerasta pikselin läpi maisemaan \\
     \eIf{säde osui polygoniin pisteessä $P$}{
-      \ForEach{Valonlähde $L$}{
+      \ForEach{valonlähde $L$}{
 	Ammu varjostussäde $\vec{R}=L-P$ valonlähdettä kohti\\
 	Kasvata pisteeseen $P$ kohdistuvaa valosummaa               
       }
@@ -89,21 +99,22 @@
 \caption{Ray-Tracing -algoritmi}\label{algo_raytrace}
 \end{algorithm}
 
-Ray-Tracing -tekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}\\
+Ray-Tracing -tekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}.\\
 
-Algoritmin suoritusta hidastaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman polygonit ja testattava osuuko säde niihin. Säteiden ja polygonien yhteistörmäyksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95\% koko laskenta-ajasta.\cite{whitted} Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien polygonien määrää jokaista sädettä kohti saataisiin vähennettyä. 
+Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman polygonit ja testattava osuuko säde niihin. Säteiden ja polygonien leikkauksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95\% koko laskenta-ajasta.\cite{whitted} Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien polygonien määrää jokaista sädettä kohti saataisiin vähennettyä. Yleisesti käytetty tapa leikkaustestien vähentämiseksi on muodostaa maisemasta ennen varsinaista renderointia hierarkinen tietorakenne, jota läpikäymällä saavutetaan nopeasti säteen leikkaama polygoni.\cite{rubin}
 
 \section{Avaruusjakopuut}
-\subsection{Binary Space Partitioning}
+\subsection{BSP-puu}
+\subsection{kd-puu}
 \subsection{Bounding Volume Hierarchy}
 
 \section{Renderoinnin optimoiminen avaruusjakopuiden avulla}
-\subsection{Aliavaruuspuuta käyttävä rekursiivinen Ray-Tracing algoritmi}
-Viittaus\cite{ranta}, viittaus\cite{hughes} ja viittaus\cite{janke}\cite{rules}\cite{fuchs}
-\cite{appel}\cite{samet}
+\subsection{*-puuta käyttävä Ray-Tracing -algoritmi}
+Viittaus\cite{ranta},\cite{samet}\cite{havran}
 
-\bibliographystyle{plain}
+\newpage
+\bibliographystyle{babplai3} %plain vai apalike?
 \bibliography{bibliography}
-
+\listofalgorithms
 
 \end{document}
