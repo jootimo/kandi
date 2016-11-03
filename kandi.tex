@@ -41,14 +41,42 @@
 
 \setlength\parindent{0pt} %uuden kappaleen sisennys
 
-\title{Avaruusjako tietokonegrafiikassa}
+\title{Avaruusjakoon perustuvat tietorakenteet tietokonegrafiikassa}
 \author{Timo Heinonen \\kandidaatintutkielma \\ tietojenkäsittelytiede \\ Turun yliopisto}
 \date{Lokakuu 2016}
+%\pagestyle{headings} 
 
 \begin{document}
 
-\maketitle
+\thispagestyle{empty}
+\begin{figure}
+\includegraphics[width=3cm]{soihtu.png}
+\vspace{4.0cm}
+\end{figure}
 
+
+\begin{center}\Large
+Avaruusjakoon perustuvat tietorakenteet tietokonegrafiikassa
+\end{center}
+
+\begin{center}
+Timo Heinonen\\
+kandidaatintutkielma\\
+Joulukuu 2016
+\end{center}
+
+\begin{center}
+Informaatioteknologian laitos\\
+tietojenkäsittelytiede\\
+Turun yliopisto\\
+\end{center}
+
+\begin{figure}[b]
+\makebox[\textwidth]{\includegraphics[width=\paperwidth]{footer.png}}
+\vspace*{-5.0cm}
+\end{figure}
+
+\newpage
 \pagenumbering{gobble}% Remove page numbers (and reset to 1)
 \thispagestyle{empty}
 \section*{Abstract}
@@ -82,7 +110,7 @@ Kolmiulottesten kuvien renderoinnin kohteena ovat \emph{objektit}, jotka mallint
 
 Objektit jaetaan lähes kaikissa ei-triviaaleissa tapauksissa \emph{polygoneihin}. Polygoni on samassa tasossa olevilla kärjillä rajattu alue, jonka kärkien muodostamat janat eivät leikkaa toisiaan. Useimmiten grafiikkasovelluksissa ja -rajapinnoissa valitaan polygonien muodoksi kolmiot, sillä niiden kolme kärkeä muodostavat aina tason, ja grafiikkaprosessorit osaavat operoida kolmioilla erittäin nopeasti.\cite{angel}\\
 
-Jotta voitaisiin tarkastella objektien, valonlähteiden, ja kuvakulman, eli \emph{kameran} välisiä suhteita ja suuntauksia avaruudessa, valitaan kolme koordinaatistoa, jotka on määritelty kolmella toisiinsa nähden kohtisuorilla kantavektorilla. Jokaisella objektilla on \emph{lokaalikoordinaatisto}, joka sisältää objektin geometrian. Useimmitien origo sijoitetaan objektin keskipisteeseen. \emph{Maailmakoordinaatisto} kuvaa koko avaruutta, ja sisältää tietoa siitä, mihin objektien lokaalikoordinaatistojen origot on sijoitettu. Lopuksi tämä maisema kuvataan virtuaalisella kameralla, jolla on oma \emph{kamerakoordinaatistonsa}. Koordinaatistosta toiseen siirtyminen, koordinaatistojen skaalaus ja rotaatio voidaan toteuttaa lineaarikuvauksilla.\cite{janke}
+Jotta voitaisiin tarkastella objektien, valonlähteiden, ja kuvakulman, eli \emph{kameran} välisiä suhteita ja suuntauksia avaruudessa, valitaan kolme koordinaatistoa, jotka on määritelty kolmella toisiinsa nähden kohtisuorilla kantavektorilla $(\vec{i},\vec{j},\vec{k})$. Jokaisella objektilla on \emph{lokaalikoordinaatisto}, joka sisältää objektin geometrian. Useimmitien origo sijoitetaan objektin keskipisteeseen. \emph{Maailmakoordinaatisto} kuvaa koko avaruutta, ja sisältää tietoa siitä, mihin objektien lokaalikoordinaatistojen origot on sijoitettu. Lopuksi tämä maisema kuvataan virtuaalisella kameralla, jolla on oma \emph{kamerakoordinaatistonsa}. Koordinaatistosta toiseen siirtyminen, koordinaatistojen skaalaus ja rotaatio voidaan toteuttaa lineaarikuvauksilla.\cite{janke}
 
 \subsection{Ray-Tracing -tekniikka}
 
