@@ -127,33 +127,7 @@ Ray Tracing on renderointitekniikka, jolla voidaan piirtää erittäin fotoreali
 
 Ray Tracing -algoritmi muodostaa sille syötteenä annetusta kolmiulotteisesta maisemasta kameran sijainnin perusteella kaksiulotteisen kuvan. Jokaisen kuvatason pikselin läpi ammutaan säde $\vec{R}=O+t\vec{D}$, missä $t\,\epsilon\,\R$, $O$ on kameran sijainti maailmakoordinaatistossa ja normalisoitu vektori $\vec{D}$ kuvaa säteen kulkusuuntaa. Säteellä etsitään törmäyspistettä lähimmän objektin kanssa, eli sellaista mahdollisimman pientä arvoa $t$, että piste $P=O+t\vec{D}$ on jonkin objektin pinnalla. Tällöin osuman saaneen objektin piste $P$ voi näkyä kameraan, mikäli siihen osuu valoa. Osumakohdasta ammutaan uusi, varjostussäteeksi kutsuttu säde. Jos varjostussäde osuu suoraan tai kimmoten muista objekteista valonlähteeseen, lankeaa objektin pinnalle valoa.\cite{janke} Tekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}.\\
 
-\begin{algorithm}
-\KwIn{\\\texttt{kuvataso}: $x*y$ kokoinen taulukko pikseleitä \\
-\texttt{maisema}: joukko valonlähteitä ja polygoneihin jaettuja objekteja}
-\KwOut{\\kolmiulotteinen maisema projisoituna kuvatasolle}
-\BlankLine
-\nonl \texttt{RAY\_TRACING(kuvataso, maisema)}:\\
-\ForEach{pikseli $(x,y) \; \epsilon$ \textnormal{\texttt{kuvataso}}}{
-  \texttt{etaisyys} $\gets \infty$ \\
-  \ForEach{polygoni $\epsilon$ \textnormal{\texttt{maisema}}}{
-    Ammu säde $\vec{R}=O+t\vec{D}$ kamerasta pikselin läpi \textnormal{\texttt{maisema}}an \\
-    \eIf{säde $R$ osui polygoniin pisteessä $P$ {\bf and} t < \textnormal{\texttt{etaisyys}}}{
-	\texttt{etaisyys} $\gets t$\\ 
-      	Valon määrä $V \gets 0$\\
-	\ForEach{valonlähde $L$}{
-	Ammu varjostussäde $\vec{R_s}=L-P$ valonlähdettä kohti\\
-	Kasvata valosummaa $V$               
-      }
-      Aseta pikselin $(x,y)$ väri valosumman $V$ mukaisesti
-    }{
-      Aseta pikseli $(x,y)$ taustan väriseksi
-    }
-  }
-}
-\KwRet \texttt{kuvataso}
-\caption{\texttt{RAY\_TRACING}}
-\label{algo_raytrace}
-\end{algorithm}
+\input{alg/raytracing.tex}
 
 Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman polygonit ja testattava osuuko säde niihin. Säteiden ja polygonien leikkauksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95\% koko laskenta-ajasta.\cite{whitted} Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien polygonien määrää jokaista sädettä kohti saataisiin vähennettyä. Yleisesti käytetty tapa leikkaustestien vähentämiseksi on muodostaa maisemasta hierarkinen tietorakenne ennen varsinaista renderointia. Tätä tietorakennetta läpikäymällä löydetään nopeasti polygoni, jonka pinnalla säteen ja objektin leikkauspiste $P$ on.\cite{rubin}
 
@@ -179,37 +153,7 @@ class BSP\_Node\\
 \hspace*{5.65cm} muodostetaan\\
 \}\\}
 
-
-\begin{algorithm}
-\KwIn{\\
-\texttt{BSP\_Node solmu}:\hspace{1.55cm} juurisolmu, josta puu rakennetaan\\
-\texttt{Polygon polygonit[$\,$]}:\tab polygonijoukko, josta alipuut rakennetaan}
-\KwOut{\\BSP-puu, jonka juurena on \texttt{node}}
-\BlankLine
-\nonl \texttt{RAKENNA\_BSP\_PUU(solmu, polygonit):\\}
- \texttt{jakaja} $\gets$ \texttt{VALITSE\_JAKAVA\_POLYGONI(polygonit)}\\
- \texttt{positiivinen\_joukko} $\gets \emptyset$\\
- \texttt{negatiivinen\_joukko} $\gets \emptyset$\\
- \ForEach{polygoni \textnormal{$\gamma \, \epsilon$ \texttt{polygonit}}}{
-   \texttt{sijainti} $\gets$ \texttt{VERTAA(jakaja, $\gamma$)}\\
-  \uIf{\textnormal{\texttt{sijainti} = jakajan edessä}}{
-   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma$
-  }
-  \uElseIf{\textnormal{\texttt{sijainti} = jakajan takana}}{
-   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma$
-  }
-  \uElseIf{\textnormal{\texttt{sijainti} = leikkaa jakajan määrittämää tasoa}}{
-   \texttt{JAA\_POLYGONI($\gamma$, jakaja, $\gamma_i$, $\gamma_j$)}\\
-   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma_i$\\
-   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma_j$
-  }
- }
-\texttt{RAKENNA\_BSP\_PUU(solmu.oikea\_lapsi, positiivinen\_joukko)}\\
-\texttt{RAKENNA\_BSP\_PUU(solmu.vasen\_lapsi, negatiivinen\_joukko)}
-
-\caption{\texttt{RAKENNA\_BSP\_PUU}}\label{algo_bsp}
-\end{algorithm}
-
+\input{alg/bsp.tex}
 
 \newpage
 Kuvissa \ref{bsp1}-\ref{bsp3} on esitetty esimerkki BSP-puun muodostamisesta. Kuvassa \ref{bsp1} on yksinkertaisuuden vuoksi esitetty polygonit $A-F$ sisältävä maisema kaksiulotteisena. Kuvassa \ref{bsp2} ensimmäiseksi jakopolygoniksi on valittu $G$, jonka positiiviselle puolelle $\Gamma_{g,+}$ jäävät polygonit $A$, $B$ ja $C$, ja negatiiviselle puolelle $\Gamma_{g,-}$ polygonit $D$, $E$ ja $F$. Jaon g negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakopolygoniksi $E$, mutta jos positiivisella puolella valitaan jakopolygoniksi $B$, joudutaan polygoni $C$ jakamaan osiin $C_1$ ja $C_2$. Jakolinjan $b$ negatiiviselle puolelle jää vain yksi polygoni $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakopolygoniksi $A$ syntyy kuvan \ref{bsp3} mukainen BSP-puu.\\
