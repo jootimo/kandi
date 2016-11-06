@@ -9,10 +9,13 @@
 \usepackage[utf8x]{inputenc}        	% skandit utf-8 koodauksella
 %\usepackage[ansinew]{inputenc}        	% skandit utf-8 koodauksella, kokeile tata, jos utf-8 ylla ei toimi.
 \usepackage{graphicx}
-\usepackage{qtree}
+%\usepackage{qtree}%yksinkertaiset puut
+\usepackage{tikz}%vähän tehokkaampi grafiikkapaketti
 \usepackage{cite}
-\usepackage[linesnumbered, boxed]{algorithm2e}
 \usepackage{url}
+\usepackage[linesnumbered, boxed]{algorithm2e}
+\let\oldnl\nl %vanha komento \nl talteen \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}} %poista rivinumero yhdeltä riviltä
 %suomennoksia yo. paketille:
 \renewcommand*{\algorithmcfname}{Algoritmi}
 \renewcommand*{\listalgorithmcfname}{Lista algoritmeista}
@@ -52,7 +55,7 @@
 
 \thispagestyle{empty}
 \begin{figure}
-\includegraphics[width=3cm]{soihtu.png}
+\includegraphics[width=3cm]{img/soihtu.png}
 \vspace{4.0cm}
 \end{figure}
 
@@ -74,7 +77,7 @@ Turun yliopisto\\
 \end{center}
 
 \begin{figure}[b]
-\makebox[\textwidth]{\includegraphics[width=\paperwidth]{footer.png}}
+\makebox[\textwidth]{\includegraphics[width=\paperwidth]{img/footer.png}}
 \vspace*{-5.0cm}
 \end{figure}
 
@@ -113,7 +116,8 @@ Tässä tutkielmassa esitellään avaruuden jakamiseen perustuvia tietorakenteit
 Kolmiulotteisten kuvien renderoinnin kohteena ovat \emph{objektit}, jotka mallintavat jotakin esinettä tai muotoa avaruudessa $\R^3$. Objektit voidaan esittää tietokoneen muistissa taulukkona pisteitä $P=(x,y,z)\;\epsilon\,\R^3$: esimerkiksi kolmiota voidaan kuvata kolmella pisteellä, ja palloa kahdella pisteellä, jotka esittävät sen keskipistettä ja yhtä pistettä sen pinnalla.\cite{angel}\\
 
 Objektit jaetaan lähes kaikissa ei-triviaaleissa tapauksissa \emph{polygoneihin}. Polygoni, eli monikulmio $\gamma = \diamond P_1P_2...P_n, \; n > 2$, on samassa tasossa olevien kärkien $P_1,...,P_n$ muodostaman murtoviivan rajaama alue, jonka kärkien muodostamat janat $P_i P_{i+1}$ eivät leikkaa toisiaan.\cite{harju} Useimmiten grafiikkasovelluksissa ja -rajapinnoissa valitaan polygonien muodoksi kolmiot, sillä niiden kolme kärkeä muodostavat aina tason, ja grafiikkaprosessorit osaavat operoida kolmioilla erittäin nopeasti.\cite{angel}\\
-%TODO: selvitä polygonien suunta: mikä on etu ja mikä takapuoli
+
+Objektien sisäpuoli halutaan yleensä jättää huomioimatta, joten polygoneille on määriteltävä, kummalla puolella on niiden etupuoli. Kolmiot ovat tässäkin suhteessa hyvä valinta polygonien muodoksi, sillä kolmiolle $\triangle P_1P_2P_3$ voidaan helposti laskea etupuolen määrittävä normaali $n$ ristitulolla $(P_2-P_1) \times (P_3-P_2)$. Huomioitavaa on, että normaalin suunta riippuu siitä, missä järjestyksessä kärjet $P_1, P_2$ ja $P_3$ on määritelty.\cite{hughes}\\
 
 Jotta voitaisiin tarkastella objektien, valonlähteiden, ja kuvakulman, eli \emph{kameran} välisiä suhteita ja suuntauksia avaruudessa, valitaan kolme koordinaatistoa, jotka on määritelty kolmella toisiinsa nähden kohtisuoralla kantavektorilla $(\vec{i},\vec{j},\vec{k})$. Jokaisella objektilla on \emph{lokaalikoordinaatisto}, joka sisältää objektin geometrian. Useimmiten origo sijoitetaan objektin keskipisteeseen. \emph{Maailmakoordinaatisto} kuvaa koko avaruutta, ja sisältää tietoa siitä, mihin objektien lokaalikoordinaatistojen origot on sijoitettu. Lopuksi tämä maisema kuvataan virtuaalisella kameralla, jolla on oma \emph{kamerakoordinaatistonsa}. Koordinaatistosta toiseen siirtyminen, koordinaatistojen skaalaus ja rotaatio voidaan toteuttaa lineaarikuvauksilla.\cite{janke}
 
@@ -123,20 +127,21 @@ Ray Tracing on renderointitekniikka, jolla voidaan piirtää erittäin fotoreali
 
 Ray Tracing -algoritmi muodostaa sille syötteenä annetusta kolmiulotteisesta maisemasta kameran sijainnin perusteella kaksiulotteisen kuvan. Jokaisen kuvatason pikselin läpi ammutaan säde $\vec{R}=O+t\vec{D}$, missä $t\,\epsilon\,\R$, $O$ on kameran sijainti maailmakoordinaatistossa ja normalisoitu vektori $\vec{D}$ kuvaa säteen kulkusuuntaa. Säteellä etsitään törmäyspistettä lähimmän objektin kanssa, eli sellaista mahdollisimman pientä arvoa $t$, että piste $P=O+t\vec{D}$ on jonkin objektin pinnalla. Tällöin osuman saaneen objektin piste $P$ voi näkyä kameraan, mikäli siihen osuu valoa. Osumakohdasta ammutaan uusi, varjostussäteeksi kutsuttu säde. Jos varjostussäde osuu suoraan tai kimmoten muista objekteista valonlähteeseen, lankeaa objektin pinnalle valoa.\cite{janke} Tekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}.\\
 
-\newpage
 \begin{algorithm}
-\KwIn{\\$kuvataso$: $x*y$ kokoinen taulukko pikseleitä \\
-$maisema$: joukko valonlähteitä ja polygoneihin jaettuja objekteja}
+\KwIn{\\\texttt{kuvataso}: $x*y$ kokoinen taulukko pikseleitä \\
+\texttt{maisema}: joukko valonlähteitä ja polygoneihin jaettuja objekteja}
 \KwOut{\\kolmiulotteinen maisema projisoituna kuvatasolle}
-\ForEach{kuvatason pikseli $(x,y)$}{
-  $etaisyys \gets \infty$ \\
-  \ForEach{polygoni maisemassa}{
-    Ammu säde $\vec{R}=O+t\vec{D}$ kamerasta pikselin läpi maisemaan \\
-    \eIf{säde osui polygoniin pisteessä $P$ {\bf and} t < etaisyys}{
-	$etaisyys \gets t$\\ 
+\BlankLine
+\nonl \texttt{RAY\_TRACING(kuvataso, maisema)}:\\
+\ForEach{pikseli $(x,y) \; \epsilon$ \textnormal{\texttt{kuvataso}}}{
+  \texttt{etaisyys} $\gets \infty$ \\
+  \ForEach{polygoni $\epsilon$ \textnormal{\texttt{maisema}}}{
+    Ammu säde $\vec{R}=O+t\vec{D}$ kamerasta pikselin läpi \textnormal{\texttt{maisema}}an \\
+    \eIf{säde $R$ osui polygoniin pisteessä $P$ {\bf and} t < \textnormal{\texttt{etaisyys}}}{
+	\texttt{etaisyys} $\gets t$\\ 
       	Valon määrä $V \gets 0$\\
 	\ForEach{valonlähde $L$}{
-	Ammu varjostussäde $\vec{R}=L-P$ valonlähdettä kohti\\
+	Ammu varjostussäde $\vec{R_s}=L-P$ valonlähdettä kohti\\
 	Kasvata valosummaa $V$               
       }
       Aseta pikselin $(x,y)$ väri valosumman $V$ mukaisesti
@@ -145,8 +150,9 @@ $maisema$: joukko valonlähteitä ja polygoneihin jaettuja objekteja}
     }
   }
 }
-\KwRet $kuvataso$
-\caption{Ray Tracing -algoritmi}\label{algo_raytrace}
+\KwRet \texttt{kuvataso}
+\caption{\texttt{RAY\_TRACING}}
+\label{algo_raytrace}
 \end{algorithm}
 
 Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman polygonit ja testattava osuuko säde niihin. Säteiden ja polygonien leikkauksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95\% koko laskenta-ajasta.\cite{whitted} Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien polygonien määrää jokaista sädettä kohti saataisiin vähennettyä. Yleisesti käytetty tapa leikkaustestien vähentämiseksi on muodostaa maisemasta hierarkinen tietorakenne ennen varsinaista renderointia. Tätä tietorakennetta läpikäymällä löydetään nopeasti polygoni, jonka pinnalla säteen ja objektin leikkauspiste $P$ on.\cite{rubin}
@@ -156,9 +162,9 @@ Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käy
 \section{Avaruusjakopuut}
 \subsection{Binäärinen avaruusjako}
 
-Eräs suosittu avaruusjakoon perustuva tietorakenne on binäärinen avaruusjakopuu, eli \emph{BSP-puu} (engl. \emph{Binary Space Partitioning}). BSP-puu luodaan valitsemalla kolmiulotteisen maiseman  polygonijoukosta $\Gamma$ yksi polygoni $\gamma_k$, joka asetetaan puun juureksi. Polygonin $\gamma$ muodostama taso jakaa maiseman, ja siten polygonijoukon $\Gamma$, kahteen osaan $\Gamma_{k,+}$ ja $\Gamma_{k,-}$. Joukko $\Gamma_{k,+}$ sisältää polygonin $\gamma_k$ positiivisella puolella olevat polygonit, ja siten ne asetetaan BSP-puuhun juuren oikeaksi lapseksi. Vastaavasti joukko $\Gamma_{k,-}$ sisältää negatiivisella puolella olevat polygonit, ja kuuluvat polygonin $\gamma_k$ vasemmaksi lapseksi. Tämä jakavan polygonin valinta ja avaruuden jako suoritetaan rekursiivisesti BSP-puun lehdille, kunnes jokaisessa lehdessä on vain yksi polygoni.\cite{samet}\\
+Eräs suosittu avaruusjakoon perustuva tietorakenne on binäärinen avaruusjakopuu, eli \emph{BSP-puu} (engl. \emph{Binary Space Partitioning}). BSP-puu luodaan valitsemalla kolmiulotteisen maiseman  polygonijoukosta $\Gamma$ yksi polygoni $\gamma_k$, joka asetetaan puun juureksi. Polygonin $\gamma$ muodostama taso jakaa maiseman, ja siten polygonijoukon $\Gamma$, kahteen osaan $\Gamma_{k,+}$ ja $\Gamma_{k,-}$. Joukko $\Gamma_{k,+}$ sisältää polygonin $\gamma_k$ positiivisella puolella olevat polygonit, ja siten ne asetetaan BSP-puuhun juuren oikeaksi lapseksi. Vastaavasti joukko $\Gamma_{k,-}$ sisältää negatiivisella puolella olevat polygonit, ja kuuluvat polygonin $\gamma_k$ vasemmaksi lapseksi. Tämä jakavan polygonin valinta ja avaruuden jako suoritetaan rekursiivisesti BSP-puun lehdille, kunnes jokaisessa lehdessä on vain yksi polygoni.\cite{samet} BSP-puun rakentamisen pseudokoodi on esitelty algoritmissa \ref{algo_bsp}.\\
 
-BSP-puuta ja sen solmuja voidaan esittää tietokoneen muistissa seuraavasti:\cite{ranta}\\\\
+BSP-puuta ja sen solmuja voidaan esittää grafiikkasovelluksessa seuraavasti:\\\\%\cite{ranta}
 \code{
 class BSP\_Tree\\
 \{\\
@@ -167,34 +173,80 @@ class BSP\_Tree\\
 class BSP\_Node\\
 \{\\
 \tab Polygon jakaja\\
-\tab BSP\_Node* Oikea\_lapsi\\
-\tab BSP\_Node* Vasen\_lapsi\\
-\tab Polygon Polygonijoukko[$\,$]\\
+\tab BSP\_Node* oikea\_lapsi\\
+\tab BSP\_Node* vasen\_lapsi\\
+\tab Polygon Polygonit[$\,$] \tab //joukko polygoneja, josta alipuut\\ 
+\hspace*{5.65cm} muodostetaan\\
 \}\\}
 
+
+\begin{algorithm}
+\KwIn{\\
+\texttt{BSP\_Node solmu}:\hspace{1.55cm} juurisolmu, josta puu rakennetaan\\
+\texttt{Polygon polygonit[$\,$]}:\tab polygonijoukko, josta alipuut rakennetaan}
+\KwOut{\\BSP-puu, jonka juurena on \texttt{node}}
+\BlankLine
+\nonl \texttt{RAKENNA\_BSP\_PUU(solmu, polygonit):\\}
+ \texttt{jakaja} $\gets$ \texttt{VALITSE\_JAKAVA\_POLYGONI(polygonit)}\\
+ \texttt{positiivinen\_joukko} $\gets \emptyset$\\
+ \texttt{negatiivinen\_joukko} $\gets \emptyset$\\
+ \ForEach{polygoni \textnormal{$\gamma \, \epsilon$ \texttt{polygonit}}}{
+   \texttt{sijainti} $\gets$ \texttt{VERTAA(jakaja, $\gamma$)}\\
+  \uIf{\textnormal{\texttt{sijainti} = jakajan edessä}}{
+   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma$
+  }
+  \uElseIf{\textnormal{\texttt{sijainti} = jakajan takana}}{
+   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma$
+  }
+  \uElseIf{\textnormal{\texttt{sijainti} = leikkaa jakajan määrittämää tasoa}}{
+   \texttt{JAA\_POLYGONI($\gamma$, jakaja, $\gamma_i$, $\gamma_j$)}\\
+   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma_i$\\
+   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma_j$
+  }
+ }
+\texttt{RAKENNA\_BSP\_PUU(solmu.oikea\_lapsi, positiivinen\_joukko)}\\
+\texttt{RAKENNA\_BSP\_PUU(solmu.vasen\_lapsi, negatiivinen\_joukko)}
+
+\caption{\texttt{RAKENNA\_BSP\_PUU}}\label{algo_bsp}
+\end{algorithm}
+
+
 \newpage
-Kuvassa 1 on yksinkertaisuuden vuoksi esitetty polygonit $A-F$ sisältävä maisema kaksiulotteisena. Kuvassa 2 ensimmäiseksi jakopolygoniksi on valittu $G$, jonka positiiviselle puolelle $\Gamma_{g,+}$ jäävät polygonit $A$, $B$ ja $C$, ja negatiiviselle puolelle $\Gamma_{g,-}$ polygonit $D$, $E$ ja $F$. Jaon g negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakopolygoniksi $E$, mutta jos positiivisella puolella valitaan jakopolygoniksi $B$, joudutaan polygoni $C$ jakamaan osiin $C_1$ ja $C_2$. Jakolinjan $b$ negatiiviselle puolelle jää vain yksi polygoni $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakopolygoniksi $A$ syntyy kuvan 3 mukainen BSP-puu.\\
+Kuvissa \ref{bsp1}-\ref{bsp3} on esitetty esimerkki BSP-puun muodostamisesta. Kuvassa \ref{bsp1} on yksinkertaisuuden vuoksi esitetty polygonit $A-F$ sisältävä maisema kaksiulotteisena. Kuvassa \ref{bsp2} ensimmäiseksi jakopolygoniksi on valittu $G$, jonka positiiviselle puolelle $\Gamma_{g,+}$ jäävät polygonit $A$, $B$ ja $C$, ja negatiiviselle puolelle $\Gamma_{g,-}$ polygonit $D$, $E$ ja $F$. Jaon g negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakopolygoniksi $E$, mutta jos positiivisella puolella valitaan jakopolygoniksi $B$, joudutaan polygoni $C$ jakamaan osiin $C_1$ ja $C_2$. Jakolinjan $b$ negatiiviselle puolelle jää vain yksi polygoni $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakopolygoniksi $A$ syntyy kuvan \ref{bsp3} mukainen BSP-puu.\\
 
 \begin{figure}
  \centering
- \includegraphics[width=0.6\textwidth]{bsp1.png}
+ \includegraphics[width=0.6\textwidth]{img/bsp1.png}
  \vspace{0.5cm}
  \caption{Joukko polygoneja tasossa}
+ \label{bsp1}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[width=0.6\textwidth]{bsp2.png}
+ \includegraphics[width=0.6\textwidth]{img/bsp2.png}
  \vspace{0.5cm}
  \caption{Taso neljän jaon jälkeen}
+ \label{bsp2}
 \end{figure}
 
 \begin{figure}
- \Tree[.G [.E [.D ]
-	      [.F ]]
-	  [.B [.C_2 ]
-	      [.A [C_1 ]]]]
+ \centering
+ \begin{tikzpicture}[level/.style={sibling distance = 60mm/#1}]
+  \node[circle,draw] (z){$G$}
+    child {node [circle,draw] (a) {$E$}
+     child {node [circle,draw] (b) {$D$}}
+     child {node [circle,draw] (c) {$F$}}
+    }
+    child {node [circle,draw] (d) {$B$}
+     child {node [circle,draw] (e) {$C_2$}}
+     child {node [circle,draw] (f) {$A$}
+      child[missing] {node {}}
+      child {node [circle,draw] (g) {$C_1$}}}
+    };
+ \end{tikzpicture}
  \caption{Tasosta muodostettu BSP-puu}
+ \label{bsp3}
 \end{figure}
 
 BSP-puun kokoon ja muotoon vaikuttaa suuresti avaruuden jakavan polygonin valinta. Pahimmassa tapauksessa kaikki polygonit $\Gamma\backslash\gamma_k$ jäävät polygonin $\gamma_k$ positiiviselle tai negatiiviselle puolelle jokaisella jaolla $k$. Tällöin puusta muodostuu pikemminkin ketjun muotoinen. Sama polygoni voi myös kuulua moneen BSP-puun alipuuhun, jos jonkun ylemmällä tasolla avaruuden jakavan polygonin $\gamma_k$ muodostama jakolinja leikkaa tätä polygonia.\cite{samet} Toinen lähestymistapa jakolinjalla oleviin polygoneihin on halkaista ne kahtia. Tämäkin tapa on epäedullinen, sillä se lisää maisemassa olevien polygonien määrää.\cite{ranta} Kun otetaan huomioon nämä rajoitteet, ei BSP-puun koolle voida antaa tarkkaa ylärajaa.\cite{hughes}\\
@@ -209,7 +261,8 @@ BSP-puu voidaan rakentaa ennen renderointia esiprosessointivaiheessa. Renderoint
 \newpage
 \section{Renderoinnin optimoiminen avaruusjakopuiden avulla}
 \subsection{kd-puuta käyttävä Ray Tracing -algoritmi}
-%Viittaus\cite{ranta},\cite{samet}\cite{havran}
+%Viittaus\cite{ranta},\cite{samet}
+\cite{havran}
 
 \newpage
 \bibliographystyle{apalike-finnish} %bibplain vai apalike?
