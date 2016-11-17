@@ -12,6 +12,7 @@
 \usepackage{url}
 \usepackage[nottoc]{tocbibind}% viitteet sisällysluetteloon
 \usepackage[linesnumbered, boxed]{algorithm2e}
+\usepackage{subcaption} % for side by side figures
 %\usepackage{cite}
 \usepackage[square]{natbib}% käytetään nyt natbibiä eikä citeä
 \setcitestyle{notesep={}}% kun laitetaan \citep[.]{lähde}, niin lähteen ja . väliin ei tule ", "
@@ -137,25 +138,30 @@ class BSP\_Node\\
 \}\\}
 
 \input{alg/bsp.tex}
-
 \newpage
-Kuvissa \ref{bsp1}-\ref{bsp3} on esitetty esimerkki BSP-puun muodostamisesta. Kuvassa \ref{bsp1} on yksinkertaisuuden vuoksi esitetty polygonit $A-F$ sisältävä maisema kaksiulotteisena. Kuvassa \ref{bsp2} ensimmäiseksi jakopolygoniksi on valittu $G$, jonka positiiviselle puolelle $\Gamma_{g,+}$ jäävät polygonit $A$, $B$ ja $C$, ja negatiiviselle puolelle $\Gamma_{g,-}$ polygonit $D$, $E$ ja $F$. Jaon g negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakopolygoniksi $E$, mutta jos positiivisella puolella valitaan jakopolygoniksi $B$, joudutaan polygoni $C$ jakamaan osiin $C_1$ ja $C_2$. Jakolinjan $b$ negatiiviselle puolelle jää vain yksi polygoni $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakopolygoniksi $A$ syntyy kuvan \ref{bsp3} mukainen BSP-puu.\\
 
 \begin{figure}
  \centering
- \includegraphics[width=0.6\textwidth]{img/bsp1.png}
- \vspace{0.5cm}
- \caption{Joukko polygoneja tasossa}
+ \begin{subfigure}{0.5\textwidth} 
+  \centering
+  \includegraphics[width=0.9\linewidth]{img/bsp1.png}
+  \vspace{0.7cm}
+  \caption{Joukko polygoneja tasossa}
+  \label{bsp11}
+ \end{subfigure}%
+ \begin{subfigure}{0.5\textwidth} 
+  \centering
+  \includegraphics[width=0.9\linewidth]{img/bsp2.png}
+  \caption{Taso neljän jaon jälkeen}
+  \label{bsp12}
+ \end{subfigure}
+ \caption{Tason jakaminen}
  \label{bsp1}
 \end{figure}
 
-\begin{figure}
- \centering
- \includegraphics[width=0.6\textwidth]{img/bsp2.png}
- \vspace{0.5cm}
- \caption{Taso neljän jaon jälkeen}
- \label{bsp2}
-\end{figure}
+Kuvissa \ref{bsp1}-\ref{bsp2} on esitetty esimerkki BSP-puun muodostamisesta. Kuvassa \ref{bsp11} on yksinkertaisuuden vuoksi esitetty polygonit $A-F$ sisältävä maisema kaksiulotteisena. Kuvassa \ref{bsp12} ensimmäiseksi jakopolygoniksi on valittu $G$, jonka positiiviselle puolelle $\Gamma_{g,+}$ jäävät polygonit $A$, $B$ ja $C$, ja negatiiviselle puolelle $\Gamma_{g,-}$ polygonit $D$, $E$ ja $F$. Jaon g negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakopolygoniksi $E$, mutta jos positiivisella puolella valitaan jakopolygoniksi $B$, joudutaan polygoni $C$ jakamaan osiin $C_1$ ja $C_2$. Jakolinjan $b$ negatiiviselle puolelle jää vain yksi polygoni $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakopolygoniksi $A$ syntyy kuvan \ref{bsp2} mukainen BSP-puu.\\
+
+BSP-puun kokoon ja muotoon vaikuttaa suuresti avaruuden jakavan polygonin valinta. Pahimmassa tapauksessa kaikki polygonit $\Gamma\backslash\{\gamma_k\}$ jäävät polygonin $\gamma_k$ positiiviselle tai negatiiviselle puolelle jokaisella jaolla $k$. Tällöin puusta muodostuu pikemminkin ketjun muotoinen. Sama polygoni voi myös kuulua moneen BSP-puun alipuuhun, jos jonkun ylemmällä tasolla avaruuden jakavan polygonin $\gamma_k$ muodostama jakolinja leikkaa tätä polygonia. \citep[.]{samet} Toinen lähestymistapa jakolinjalla oleviin polygoneihin on halkaista ne kahtia. Tämäkin tapa on epäedullinen, sillä se lisää maisemassa olevien polygonien määrää. \citep[.]{ranta} Kun otetaan huomioon nämä rajoitteet, ei BSP-puun koolle voida antaa tarkkaa ylärajaa \citep{hughes}.\\
 
 \begin{figure}
  \centering
@@ -173,10 +179,9 @@ Kuvissa \ref{bsp1}-\ref{bsp3} on esitetty esimerkki BSP-puun muodostamisesta. Ku
     };
  \end{tikzpicture}
  \caption{Tasosta muodostettu BSP-puu}
- \label{bsp3}
+ \label{bsp2}
 \end{figure}
 
-BSP-puun kokoon ja muotoon vaikuttaa suuresti avaruuden jakavan polygonin valinta. Pahimmassa tapauksessa kaikki polygonit $\Gamma\backslash\{\gamma_k\}$ jäävät polygonin $\gamma_k$ positiiviselle tai negatiiviselle puolelle jokaisella jaolla $k$. Tällöin puusta muodostuu pikemminkin ketjun muotoinen. Sama polygoni voi myös kuulua moneen BSP-puun alipuuhun, jos jonkun ylemmällä tasolla avaruuden jakavan polygonin $\gamma_k$ muodostama jakolinja leikkaa tätä polygonia. \citep[.]{samet} Toinen lähestymistapa jakolinjalla oleviin polygoneihin on halkaista ne kahtia. Tämäkin tapa on epäedullinen, sillä se lisää maisemassa olevien polygonien määrää. \citep[.]{ranta} Kun otetaan huomioon nämä rajoitteet, ei BSP-puun koolle voida antaa tarkkaa ylärajaa \citep{hughes}.\\
 
 BSP-puuta rakennettaessa tavoitteena on muodostaa mahdollisimman tasapainoinen binääripuu valitsemalla jokaisella jakokerralla jakajaksi sellainen polygoni $\gamma_k$, jonka positiivisella ja negatiivisella puolella on likimain yhtä paljon polygoneja, eli $\abs{\Gamma_{k,+}} \approx \abs{\Gamma_{k,-}}$. Tällöin  $n$:n polygonin joukousta muodostetun BSP-puun syvyys olisi $O(\log n)$. Koska puun solmuja syntyy lisää, kun jakolinjan leikkaavat polygonit jaetaan kahtia, tai jakolinjalla oleva polygoni sisällytetään useaan alipuuhun, voidaan puun logaritmista tavoitesyvyyttä pitää vain alarajana. \citep[.]{hughes} $n$ polygonia sisältävästä maisemasta rakennetun BSP-puun syvyys on siis $\Omega(\log n)$\\
 
