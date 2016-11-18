@@ -1,0 +1,18 @@
+\begin{figure}
+ \centering
+ \begin{tikzpicture}[level/.style={sibling distance = 60mm/#1}]
+  \node[circle,draw] (z){$G$}
+    child {node [circle,draw] (a) {$E$}
+     child {node [circle,draw] (b) {$D$}}
+     child {node [circle,draw] (c) {$F$}}
+    }
+    child {node [circle,draw] (d) {$B$}
+     child {node [circle,draw] (e) {$C_2$}}
+     child {node [circle,draw] (f) {$A$}
+      child[missing] {node {}}
+      child {node [circle,draw] (g) {$C_1$}}}
+    };
+ \end{tikzpicture}
+ \caption{Tasosta muodostettu BSP-puu}
+ \label{bsp2}
+\end{figure}
