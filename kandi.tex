@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt, titlepage]{article}
+﻿\documentclass[a4paper,12pt, titlepage]{article}
 \usepackage{amssymb,amsthm,amsmath} %ams
 \usepackage[finnish]{babel} %suomenkielinen tavutus
 \usepackage[fixlanguage]{babelbib}
@@ -105,7 +105,15 @@ Jotta voitaisiin tarkastella objektien, valonlähteiden, ja kuvakulman eli \emph
 
 \subsection{Ray Tracing -tekniikka}
 
-Ray Tracing on hahmontamistekniikka, jolla voidaan piirtää erittäin fotorealistisia kuvia. Ray Tracing -tekniikka pyrkii mallintamaan valonsäteitä, jotka saavat alkunsa valonlähteistä, kulkevat avaruudessa ja osuvat objekteihin, jolloin ne valaisevat niitä, kimpoavat niistä toisiin objekteihin ja muodostavat varjoja. Jotkut valonsäteet löytävät lopulta tiensä katsojan silmiin eli kameraan. Koska olisi mahdotonta selvittää jokaisen valonsäteen kulkua avaruudessa, Ray Tracing -algoritmi ottaa huomioon vain ne säteet, jotka todella osuvat kameraan. Valonsäteitä seurataan siis käänteisessä järjestyksessä, kamerasta objekteihin, ja niistä valonlähteisiin. \citep[.]{janke}\\
+Ray Tracing on hahmontamistekniikka, jolla voidaan piirtää erittäin fotorealistisia kuvia. Ray Tracing -tekniikka pyrkii mallintamaan valonsäteitä, jotka saavat alkunsa valonlähteistä, kulkevat avaruudessa ja osuvat objekteihin, jolloin ne valaisevat niitä, kimpoavat niistä toisiin objekteihin ja muodostavat varjoja. Jotkut valonsäteet löytävät lopulta tiensä katsojan silmiin eli kameraan. Koska olisi mahdotonta selvittää jokaisen valonsäteen kulkua avaruudessa, Ray Tracing -algoritmi ottaa huomioon vain ne säteet, jotka todella osuvat kameraan. Valonsäteitä seurataan siis käänteisessä järjestyksessä, kamerasta objekteihin, ja niistä valonlähteisiin. Ray Tracing -tekniikkaa on havainnollistettu kuvassa \ref{raytracing} \citep[.]{janke}\\
+
+\begin{figure}
+ \centering 
+ \includegraphics[width=\textwidth]{img/raytracing.png}
+ \vspace{0.5cm}
+ \caption{Säteen ampuminen kuvan läpi maisemaan \citep{janke}}
+ \label{raytracing}
+\end{figure}
 
 Ray Tracing -algoritmi muodostaa sille syötteenä annetusta kolmiulotteisesta maisemasta kameran sijainnin perusteella kaksiulotteisen kuvan. Jokaisen kuvatason pikselin läpi ammutaan säde $\vec{R}=O+t\vec{D}$, missä $t\,\epsilon\,\R$, $O$ on kameran sijainti maailmakoordinaatistossa ja normalisoitu vektori $\vec{D}$ kuvaa säteen kulkusuuntaa. Säteellä etsitään törmäyspistettä lähimmän objektin kanssa eli sellaista mahdollisimman pientä arvoa $t$, että piste $P=O+t\vec{D}$ on jonkin objektin pinnalla. Tällöin osuman saaneen objektin piste $P$ voi näkyä kameraan, mikäli siihen osuu valoa. Osumakohdasta ammutaan uusi, varjostussäteeksi kutsuttu säde. Jos varjostussäde osuu suoraan tai kimmoten muista objekteista valonlähteeseen, lankeaa objektin pinnalle valoa. \citep[.]{janke} Tekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}.\\
 
