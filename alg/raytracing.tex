@@ -1,15 +1,15 @@
 \begin{algorithm}
 \small
 \KwIn{\\\texttt{kuvataso}: $x*y$ kokoinen taulukko pikseleitä \\
-\texttt{maisema}: joukko valonlähteitä ja polygoneihin jaettuja objekteja}
+\texttt{maisema}: joukko valonlähteitä ja monikulmioihin jaettuja objekteja}
 \KwOut{\\kolmiulotteinen maisema projisoituna kuvatasolle}
 \BlankLine
 \nonl \texttt{RAY\_TRACING(kuvataso, maisema)}:\\
 \ForEach{pikseli $(x,y) \; \epsilon$ \textnormal{\texttt{kuvataso}}}{
   \texttt{etaisyys} $\gets \infty$ \\
-  \ForEach{polygoni $\epsilon$ \textnormal{\texttt{maisema}}}{
+  \ForEach{monikulmio $\epsilon$ \textnormal{\texttt{maisema}}}{
     Ammu säde $\vec{R}=O+t\vec{D}$ kamerasta pikselin läpi \textnormal{\texttt{maisema}}an \\
-    \eIf{säde $R$ osui polygoniin pisteessä $P$ {\bf and} t < \textnormal{\texttt{etaisyys}}}{
+    \eIf{säde $\vec{R}$ osui monikulmioon pisteessä $P$ {\bf and} t < \textnormal{\texttt{etaisyys}}}{
 	\texttt{etaisyys} $\gets t$\\ 
       	Valon määrä $V \gets 0$\\
 	\ForEach{valonlähde $L$}{

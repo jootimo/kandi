@@ -2,14 +2,14 @@
 \small
 \KwIn{\\
 \texttt{BSP\_Node solmu}:\hspace{1.55cm} juurisolmu, josta puu rakennetaan\\
-\texttt{Polygon polygonit[$\,$]}:\tab polygonijoukko, josta alipuut rakennetaan}
+\texttt{Polygon monikulmiot[$\,$]}:\tab monikulmiojoukko, josta alipuut rakennetaan}
 \KwOut{\\BSP-puu, jonka juurena on solmu \texttt{node}}
 \BlankLine
-\nonl \texttt{RAKENNA\_BSP\_PUU(solmu, polygonit):\\}
- \texttt{jakaja} $\gets$ \texttt{VALITSE\_JAKAVA\_POLYGONI(polygonit)}\\
+\nonl \texttt{RAKENNA\_BSP\_PUU(solmu, monikulmiot):\\}
+ \texttt{jakaja} $\gets$ \texttt{VALITSE\_JAKAVA\_MONIKULMIO(monikulmiot)}\\
  \texttt{positiivinen\_joukko} $\gets \emptyset$\\
  \texttt{negatiivinen\_joukko} $\gets \emptyset$\\
- \ForEach{\textnormal{\texttt{$\gamma \, \epsilon$ polygonit}}}{
+ \ForEach{\textnormal{\texttt{$\gamma \, \epsilon$ monikulmiot}}}{
    \texttt{sijainti} $\gets$ \texttt{VERTAA(jakaja, $\gamma$)}\\
   \uIf{\textnormal{\texttt{sijainti} = jakajan edessä}}{
    \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma$
@@ -18,7 +18,7 @@
    \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma$
   }
   \ElseIf{\textnormal{\texttt{sijainti} = leikkaa jakajan määrittämää tasoa}}{
-   \texttt{JAA\_POLYGONI($\gamma$, jakaja, $\gamma_i$, $\gamma_j$)}\\
+   \texttt{JAA\_MONIKULMIO($\gamma$, jakaja, $\gamma_i$, $\gamma_j$)}\\
    \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma_i$\\
    \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma_j$
   }  
@@ -32,3 +32,4 @@
 
 \caption{\texttt{RAKENNA\_BSP\_PUU}}\label{algo_bsp}
 \end{algorithm}
+
