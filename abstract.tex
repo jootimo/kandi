@@ -1,13 +1,4 @@
-%\documentclass[12pt,a4paper]{article}
-
-%alkuhömpötykset
-%\usepackage[utf8]{inputenc}        	% skandit utf-8 koodauksella
-%\usepackage[T1]{fontenc}
-%\usepackage[finnish]{babel}
-
-%säädetään marginaalit vaatimuksia vastaaviksi
 \setlength{\hoffset}{-1in} \setlength{\oddsidemargin}{4cm} \addtolength{\textwidth}{1.3cm} \addtolength{\textheight}{1cm} \setlength{\voffset}{-1in}
-
 \thispagestyle{empty}  %ei sivunumeroa sivun alareunaan
 
 \noindent
@@ -15,14 +6,23 @@ TURUN YLIOPISTO\\
 Informaatioteknologian laitos\\
 \\
 HEINONEN, TIMO: Avaruusjakoon perustuvat tietorakenteet tietokonegrafiikassa\\
-kandidaatintutkielma, xx s., yy liites.\\
-Tietojenkäsittelytiede\\
-Marraskuu 2016\\
+kandidaatintutkielma, \pageref{LastPage} s.\\
+Tietojenkäsittelytieteet\\
+\today\\
 \rule{\textwidth}{.2mm}\\
 \\
-\vspace{4mm}%kappaleenvaihto tälviisii
-\vspace{4mm}
+Tässä tutkielmassa tutustutaan kolmiulotteisten kuvien hahmontamiseen kaksiulotteisiksi kuviksi säteenseurannaksi kutsutulla tekniikalla. Säteenseurannalla saadaan muodostettua realistisia kuvia, mutta se on laskennollisesti erittäin raskasta. Tästä syystä hahmonnuksen kohteena olevasta maisemasta muodostetaan ennen hahmonnusta avaruuden osiin jakamiseen perustuva tietorakenne, jota läpikäymällä voidaan vähentää tarvittavien laskutoimitusten määrää.
+
 \vspace{4mm}
 
-\vspace{4mm}Asiasanat: Tietokonegrafiikka, Ray Tracing, BSP-puu, kd-puu.
+Avaruusjakorakenteista esitetään BSP-puu, sen erikoistapaus kd-puu ja rajaavien tilojen hierarkia BVH. Oikein muodostettuna näitä rakenteita käyttämällä voidaan vähentää hahmontamisessa tarvittavia säteiden ja monikulmioiden leikkausta testaavia operaatioita logaritmiseen määrään verrattuna niin sanottuun brute force -toteutukseen. 
+
+\vspace{4mm}
+
+Lopuksi vertaillaan tietorakenteita keskenään ja yritetään löytää niistä sellainen, joka nopeuttaisi säteenseurantaa eniten. Tulokset hahmontamisen nopeudessa vaihtelevat kuitenkin kuvattavien maisemien, käytettyjen implementaatioiden sekä laitteistojen välillä niin paljon, ettei parasta tietorakennetta pystytä osoittamaan.
+
+%\vspace{4mm}
+
+\vfill
+\vspace{4mm}Asiasanat: tietokonegrafiikka, säteenseuranta, avaruusjako, BSP-puu, kd-puu, rajaava tila, BVH.
 

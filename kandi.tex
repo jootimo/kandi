@@ -14,6 +14,7 @@
 \usepackage[linesnumbered, boxed]{algorithm2e}
 \usepackage{subcaption} % for side by side figures
 \usepackage[hang,flushmargin]{footmisc}
+\usepackage{lastpage} %jotta voi \thepage\ of \pageref{LastPage}
 %\usepackage{cite}
 \usepackage[square]{natbib}% käytetään nyt natbibiä eikä citeä
 \setcitestyle{notesep={}}% kun laitetaan \citep[.]{lähde}, niin lähteen ja . väliin ei tule ", "
@@ -66,7 +67,7 @@
 \newpage
 \section{Johdanto}
 
-Kolmiulotteisen tietokonegrafiikkan tutkimuksella on ollut merkittävä vaikutus viihdeteollisuuteen, kuten animaatioelokuviin, peleihin ja virtuaalitodellisuuteen, sekä tietokoneavusteiseen suunnitteluun, esimerkiksi arkktehtuurin ja teollisuuden alalla. \citep{wald04}  Tietokonegrafiikka on osin jopa syrjäyttämässä perinteistä valokuvaustyötä: huonekalujätti Ikea on siirtynyt käyttämään myyntikuvastoissaan valtaosin tietokoneella generoituja kuvia valokuvien sijaan \citep{ikea}. Tietokonegrafiikan sovelluskohteet lisääntyvät jatkuvasti. Eräs aktiivinen tutkimuskohde on esimerkiksi tietokonegrafiikan tekniikoiden soveltaminen konenäköön. \citep[.]{hughes}\\
+Kolmiulotteisen tietokonegrafiikkan tutkimuksella on ollut merkittävä vaikutus viihdeteollisuuteen, kuten animaatioelokuviin, peleihin ja virtuaalitodellisuuteen, sekä tietokoneavusteiseen suunnitteluun, esimerkiksi arkktehtuurin ja teollisuuden alalla. Tietokonegrafiikka on osin jopa syrjäyttämässä perinteistä valokuvaustyötä: huonekalujätti Ikea on siirtynyt käyttämään myyntikuvastoissaan valtaosin tietokoneella generoituja kuvia valokuvien sijaan \citep{ikea}. Tietokonegrafiikan sovelluskohteet lisääntyvät jatkuvasti. Eräs aktiivinen tutkimuskohde on esimerkiksi tietokonegrafiikan tekniikoiden soveltaminen konenäköön. \citep[.]{hughes}\\
 
 Grafiikan piirtämistä kolmiulotteisista malleista kaksiulotteisiksi kuviksi kutsutaan hahmontamiseksi (engl. \emph{rendering}). Hahmontamisen lähtökohtana on kuvattava maisema (engl. \emph{scene}), joka sisältää objekteja ja valonlähteitä. Objektit ja valonlähteet on voitava mallintaa matemaattisesti, jotta niille voidaan määrittää sijainti ja suuntaus ja jotta niiden välisiä etäisyyksiä ja suhteita voidaan laskea. Hahmontaminen tapahtuu aina jostakin kuvakulmasta, ja tätä varten määritellään virtuaalinen kamera, jolla on oma sijaintinsa ja suuntauksensa maisemassa. Tämän jälkeen on selvitettävä, mitkä objektit kamera näkee, miten objekteihin osuvat valonsäteet vaikuttavat niiden väriin ja kuvan varjostukseen. Lopuksi lasketaan mitkä värit projisoidaan kuvatason mihinkin pikseliin. \citep[.]{janke}\\
 
@@ -104,7 +105,7 @@ Säteenseuranta-algoritmi muodostaa sille syötteenä annetusta kolmiulotteisest
 %Järjestys tässä?
 Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman monikulmiot ja testattava, osuuko säde niihin. Säteiden ja monikulmioiden leikkauksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95 \% koko laskenta-ajasta \citep{whitted}. Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien monikulmioiden määrää jokaista sädettä kohti saataisiin vähennettyä. Yleisesti käytetty tapa leikkaustestien vähentämiseksi on muodostaa maisemasta hierarkinen tietorakenne ennen varsinaista hahmontamista. Tätä tietorakennetta läpikäymällä löydetään nopeasti monikulmio, jonka pinnalla säteen ja objektin leikkauspiste $P$ on. \citep[.]{rubin}\\
 
-Säteenseurantaa on perinteisesti sen hitauden vuoksi hyödynnetty hahmontamisessa, jossa käytetty laskenta-aika saakin venyä pitkäksi. Peleissä, virtuaalitodellisuudessa ja muissa reaaliaikaista hahmontamista vaativissa sovelluksissa on käytetty pitkälti niink utsuttua kolmioiden rasterointitekniikkaa (engl. \emph{rasterization}). Säteenseurannalla hahmonnetut kuvat ovat kuitenkin huomattavasti realistisempia kuin rasteroinnilla saavutetut, joten reaaliaikainen hahmontaminen Säteenseurantatekniikalla on suosittu tutkimuskohde. \citep[.]{wald04}  
+Säteenseurantaa on perinteisesti sen hitauden vuoksi hyödynnetty hahmontamisessa, jossa käytetty laskenta-aika saakin venyä pitkäksi (engl. \emph{Offline Rendering}. Peleissä, virtuaalitodellisuudessa ja muissa reaaliaikaista hahmontamista vaativissa sovelluksissa on käytetty pitkälti niinkutsuttua kolmioiden rasterointitekniikkaa (engl. \emph{rasterization}). Säteenseurannalla hahmonnetut kuvat ovat kuitenkin huomattavasti realistisempia kuin rasteroinnilla saavutetut, joten reaaliaikainen hahmontaminen Säteenseurantatekniikalla on suosittu tutkimuskohde. \citep[.]{wald04}  
  
 
 \begin{figure}
@@ -231,15 +232,15 @@ Säteen $\vec{R}=O+t\vec{D}$ ja pallon $S$ leikkausta voidaan tarkastella määr
 
 
 \newpage
-\section{Avaruusjakopuiden vertailua}
+\section{Avaruusjakopuiden hyödyntäminen säteenseurannassa}
 
-Tässä luvussa vertaillaan luvussa 3 esiteltyjä tietorakenteita ja selvitetään, mitä eroja niissä on säteenseurannan nopeuttamisen kannalta. Lisäksi selvitetään mitä ongelmia tietorakenteiden alustamiseen liittyy, ja miten onglemat voidaan selvittää. Vertailussa keskitytään pääasiassa binääriseen avaruusjakoon kd-puun avulla ja objektien ryhmittelyyn BVH:n avulla. Yleisen BSP-puun sijaan tarkastellaan kd-puuta sen yksinkertaisuuden ja sitä käsittelevän tutkimuksen määrän vuoksi.\footnote{Myös yleisen BSP-puun käyttö säteenseurannassa on tuottanut hyviä tuloksia. \citep[ks. esim.][]{ranta}} 
+Tässä luvussa vertaillaan luvussa 3 esiteltyjä tietorakenteita ja selvitetään, mitä eroja niissä on säteenseurannan nopeuttamisen kannalta. Lisäksi selvitetään mitä ongelmia tietorakenteiden alustamiseen liittyy ja miten onglemat voidaan selvittää. Vertailussa keskitytään binääriseen avaruusjakoon kd-puun avulla ja objektien ryhmittelyyn BVH:n avulla. Yleisen BSP-puun sijaan tarkastellaan kd-puuta sen yksinkertaisuuden ja sitä käsittelevän tutkimuksen määrän vuoksi.\footnote{Myös yleisen BSP-puun käyttö säteenseurannassa on tuottanut hyviä tuloksia. \citep[ks. esim.][]{ranta}} Lopuksi luodaan lyhyt katsaus tekniikoihin, joilla säteenseuranta-algoritmia voidaan optimoida entisestään.
 
 \subsection{Tietorakenteiden alustaminen}
 
-Rakennettaessa kd-puuta on otettava kantaa, mitä tehdään monikulmioille, jotka ulottuvat avaruuden jakavan tason molemmille puolille. Sekä monikulmion jakaminen osiin, että sen sisällyttäminen useaan solmuun kasvattavat kd-puuta turhaan. kd-puusta saatava hyöty on suurin silloin, kun avaruusjakoja on tehty mahdollisimman paljon ja lehtisolmuissa on mahdollisimman vähän monikulmioita. Tällöin todennäköisyys sille, että monikulmioita jää jakotasojen molemmin puolin on suuri ja tietorakenteen vaatima tallennustila kasvaa erittäin suureksi. \citep[.]{wald04} \\
+Rakennettaessa kd-puuta on otettava kantaa, mitä tehdään monikulmioille, jotka ulottuvat avaruuden jakavan tason molemmille puolille. Sekä monikulmion jakaminen osiin, että sen sisällyttäminen useaan solmuun kasvattavat kd-puuta turhaan. kd-puusta saatava hyöty on suurin silloin, kun avaruusjakoja on tehty mahdollisimman paljon ja lehtisolmuissa on mahdollisimman vähän monikulmioita. Tällöin todennäköisyys sille, että monikulmioita jää jakotasojen molemmin puolin on suuri ja tietorakenteen vaatima tallennustila kasvaa merkittävästi. \citep[.]{wald04} \\
 
-BVH:ta muodostettaessa ei synny samankaltaista ongelmaa kuin kd-puiden kanssa, sillä monikulmio voi kuulua vain yhteen objektiin ja objektin rajaava tila sisältää kaikki sen monikulmiot. Myös BVH-puu kannattaa muodostaa syväksi. Jos BVH sisältäisi vain koko maiseman kattavan juuren ja sen lapsina olisi kaikkien objektien rajaavat tilat, ei tietorakenteen tuoma hyöty olisi paras mahdollinen. Puuhun kannattaa siis sijoittaa useita rajaavia tiloja, jotka sisältävät useita objekteja. Objektijoukon jakaminen kahtia BVH:n jokaisella tasolla  näyttäisi olevan hyvä valinta. \citep[.]{goldsmith} \\
+BVH:ta muodostettaessa ei synny samankaltaista ongelmaa kuin kd-puiden kanssa, sillä monikulmio voi kuulua vain yhteen objektiin ja objektin rajaava tila sisältää kaikki sen monikulmiot. Myös BVH-puu kannattaa muodostaa syväksi. Jos BVH sisältäisi vain koko maiseman kattavan juuren, jonka lapsina olisi kaikkien objektien rajaavat tilat, ei tietorakenteen tuoma hyöty olisi paras mahdollinen. Puuhun kannattaa siis sijoittaa useita rajaavia tiloja, jotka sisältävät useita objekteja. Objektijoukon jakaminen kahtia BVH:n jokaisella tasolla  näyttäisi olevan hyvä valinta. \citep[.]{goldsmith} \\
 
 Kuten aikaisemmin mainittu, avaruusjakorakenteen tuoma hyöty riippuu siitä, miten hyvin avaruuden ositus on onnistunut. Sekä kd-puun, että BVH:n alustamisessa voidaan hyödyntää samankaltaista hintafunktiota, jolla voidaan minimoida puun läpikäymisen viemä aika. Hintafunktiota voidaan kuvata seuraavasti: olkoon alipuussa $N$ monikulmiota, jotka peittävät alueen $V$. Tämä alipuu jaetaan osiin $L$ ja $R$, joissa on $N_L$ ja $N_R$ monikulmiota, jotka peittävät alueen $V_L$ ja $V_R$. Tällöin alipuun läpikäymisen hinta on\\
 
@@ -247,45 +248,69 @@ Kuten aikaisemmin mainittu, avaruusjakorakenteen tuoma hyöty riippuu siitä, mi
 $Hinta(V\to\{L,R\}) = K_T + K_I(\dfrac{A(V_L)}{A(V)}N_L + \dfrac{A(V_R)}{A(V)}N_R)$,\\
 \vspace{0.2cm}
 \end{centering}
-missä $A(V_i)$ on alueen $V_i$ pinta-ala, ja arvot $K_T$ ja $K_I$ ovat joitakin puun läpikäynnistä ja säde-monikulmio-yhteentörmäystesteistä johtuvia vakioita. Minimoimalla tämä funktio puun alustuksen joka vaiheessa, saadaan muodostettua tehokas avaruuden jako. \citep[.]{wald07}\\
+missä $A(V_i)$ on alueen $V_i$ pinta-ala, ja arvot $K_T$ ja $K_I$ ovat puun läpikäynnistä ja säde-monikulmio-yhteentörmäystesteistä johtuvia vakioita. Minimoimalla tämä funktio puun alustuksen joka vaiheessa, saadaan muodostettua tehokas avaruuden jako. \citep[.]{wald07}\\
 
-Edellä mainittua, hintafunktiota käyttävää tekniikkaa kutsutaan \emph{pinta-ala heuristiikaksi} (engl. \emph{Surface Area Heuristics, SAH}) ja sillä saadaan muodostettua hyvä avaruuden ositus sekä kd-puulle, että BVH:lle. Ingo Waldin tekemässä tutkimuksessa BVH:n muodostaminen onnistui kuitenkin jopa 10 kertaa nopeammin. Tämä johtuu muun muassa kd-puun alustamisessa esiintyvistä, jakotason leikkaavista monikulmioista. \citep[.]{wald07}  
+Edellä mainittua, hintafunktiota käyttävää tekniikkaa kutsutaan \emph{pinta-alaheuristiikaksi} (engl. \emph{Surface Area Heuristics, SAH}) ja sillä saadaan muodostettua hyvä avaruuden ositus sekä kd-puulle, että BVH:lle. Ingo Waldin tekemässä tutkimuksessa BVH:n muodostaminen onnistui kuitenkin jopa 10 kertaa nopeammin. Tämä johtuu muun muassa kd-puun alustamisessa esiintyvistä, jakotason leikkaavista monikulmioista. \citep[.]{wald07}  
 
 %BVH:n muodostaminen maisemasta vie vain n. 30\% enemmän tilaa. golds
 
 %BVH:ssa nodeja on O(2n-1) wald
 
-\subsection{Tietorakenteiden hyödyntäminen säteenseurannassa}
+\subsection{Tietorakenteiden käyttö hahmontamisessa}
 
-Avaruusjakorakenteiden hyödyntäminen säteenseurannassa on hyvin samankaltaista riippumatta siitä, millä periaatteella tietorakenne on muodostettu. Algoritmissa \ref{algo_isect} on kuvattu hyvin yksinkertainen pseudokoodi, jolla voidaan testata säteen osumista avaruusjakopuuna kuvattuun maisemaan.\\ 
+Avaruusjakorakenteiden hyödyntäminen säteenseurannassa on hyvin samankaltaista riippumatta siitä, millä periaatteella tietorakenne on muodostettu. Algoritmissa \ref{algo_isect} on kuvattu yksinkertaistettu pseudokoodi, jolla voidaan testata säteen osumista avaruusjakopuuna kuvattuun maisemaan.\\ 
 
 \input{alg/isect.tex}
 
-%Vlastimil Havran   \citep[]{havran}\\
+Vlastimil Havran vertaili väitöskirjassaan eri tietorakenteita säteenseurannan nopeuttamisessa. Havranin testeissä pinta-alaheuristiikan avulla muodostettu kd-puu osoittautui yleisesti tehokkaimmaksi tietorakenteeksi, vaikka joissakin tapauksissa muut tekniikat tuottivat nopeamman hahmonnuksen. BVH:n avulla suoritettu säteenseuranta tuotti pienimmän hyödyn kaikista vertailluista rakenteista. Havran kuitenkin myöntää, että yhtä optimaalista tietorakennetta kaikkien maisemien hahmontamiseen tuskin löytyy. \citep[.]{havran}\\
 
-Niels Thrane ja Lars Ole Simonsen vertailivat pro gradu -työssään eri avaruusjakorakenteita grafiikkaprosessoreilla suoritetussa säteenseurannassa. Koska säteenseurannassa jokainen säde on riippumaton muista säteistä, voidaan säteenseuranta-algoritmi suorittaa helposti rinnakkain, mikä onnistuu grafiikkaprosessoreilta erittäin nopeasti. Yllättäen Thranen ja Simonsenin vertailussa BVH:n käytöllä saatiin yhdeksänkertainen nopeutus kd-puuhun verrattuna. \citep[.]{thrane}\\  
+Niels Thrane ja Lars Simonsen vertailivat pro gradu -työssään eri avaruusjakorakenteita grafiikkaprosessoreilla suoritetussa säteenseurannassa. Koska säteenseurannassa jokainen säde on riippumaton muista, voidaan säteenseuranta-algoritmi suorittaa helposti rinnakkain. Tämä onnistuu grafiikkaprosessoreilta erittäin nopeasti. Toisin kuin Havranin testeissä, Thranen ja Simonsenin vertailussa BVH:n käytöllä saatiin yhdeksänkertainen nopeutus kd-puuhun verrattuna. \citep[.]{thrane}\\  
 
-Yksiselitteisesti ei voida sanoa, mikä avaruusjakoon perustuvista tietorakenteista soveltuisi parhaiten säteenseurannan nopeuttamiseen. Asymptoottisesti avaruusjakopuiden käyttö säteenseurassa vähentää tarvittavien yhteentörmäystestien määrää luokasta $O(n)$ luokkaan $O(\log n)$, riippumatta käytetystä tietorakenteesta. Tulokset voivat vaihdella käytännössä eri maisemien, implementaatioiden, laitteistojen ja sovelluksien välillä. \citep[.]{wald04}  
+Yksiselitteisesti ei voida siis sanoa, mikä avaruusjakoon perustuvista tietorakenteista soveltuisi parhaiten säteenseurannan nopeuttamiseen. Asymptoottisesti avaruusjakopuiden käyttö säteenseurassa vähentää tarvittavien yhteentörmäystestien määrää luokasta $O(n)$ keskimäärin luokkaan $O(\log n)$, riippumatta käytetystä tietorakenteesta. Tulokset hahmontamisen nopeudessa voivat vaihdella käytännössä eri maisemien, implementaatioiden, laitteistojen ja sovelluksien välillä. \citep[.]{wald04} \\
 
+\subsection{Reaaliaikainen säteenseuranta}
 
-%Säteen ja lähimmän monikulmion leikkauspisteen etsintä voidaan lopettaa heti ensimmäinen leikkaus, jos monikulmiot on jaettu esiprosessointivaiheessa kasvavaan järjestykseen etäisyyden kamerasta kannalta \citep{wald04}
+Kuten luvussa 2.2 mainittiin, nopeaa hahmontamista vaativiin sovelluksiin käytetään yleensä rasterointitekniikkaa. Säteenseuranta on kuitenkin ylivoimainen hahmontamistekniikka johtuen sen kyvystä mallintaa realistista valon liikettä ja heijastumista. Reaaliaikaista säteenseurantaa on pitkään pidetty mahdottomana, sillä se vaatii vähintään 30 kuvan hahmontamista sekunnissa. Tähän sisältyy jokaista pikseliä vastaavan säteen ampuminen, yhteentörmäysten etsiminen, varjostus ja kuvan tulostaminen ruudulle. \\
 
+Ingo Wald näyttää väitöskirjassaan reaaliaikaisen säteenseurannan olevan mahdollista staattisille maisemille hyvin muodostetulla avaruusjakotietorakenteella ja lukuisilla muilla optimoinneilla \citep{wald04}. Jos objektit liikkuvat hahmonnettaessa reaaliaikaisesti maisemaa, joudutaan avaruusjakorakennetta muokkaamaan kuvien välissä. Wald ja Havran ovat näyttäneet artikkelissaan, että uutta maisemaa vastaava kd-puu voidaan muodostaa ajassa $O(n \log n)$, missä $n$ on monikulmioiden määrä \citep{wald06}. Tämä ei kuitenkaan ole tarpeeksi nopeaa. Wald et al. on myös esittänyt käytettäväksi topologialtaan staattista BVH:ta, jonka rajaavien tilojen koordinaatteja muutetaan objektien liikkuessa \citep{wald}. Vaikka tulokset ovat olleet lupaavia, on reaaliaikaiseen, liikkuvien maisemien hahmontamiseen säteenseurannalla vielä matkaa. 
+
+\subsection{Muita optimointitekniikoita}
+
+Monimutkaisen maiseman reaaliaikainen hahmontaminen vaatii toki muitakin optimointitekniikoita kuin avaruusjakorakenteet onnistuakseen tavallisella laitteistolla. Luodaan seuraavaksi katsaus muutamaan tekniikkaan.\\
+
+Säteenseurannassa säde $\vec{R}$ voi osua useaan monikulmioon, mutta kiinnostuneita ollaan vain kameraa lähinnä olevasta leikkauspisteestä. Jos avaruuden osat eli vokselit on esiprosessointivaiheessa järjestetty kasvavaan järjestykseen suhteessa niiden etäisyyteen kamerasta, voidaan säteen ja monikulmioiden leikkauspisteiden etsintä lopettaa ajoissa (engl. \emph{Early Ray Termination}). Tämä tekniikka vaatii kuitenkin enemmän laskentaa esiprosessointivaiheessa. \citep{wald04}\\
+
+Pullonkaulaksi säteenseurannassa voi muodostua monikulmioiden ja muun datan hakeminen keskusmuistista. Datan hakeminen cache-muistista on moninkertaisesti nopeampaa kuin keskusmuistista, joten usein tarvittua dataa, kuten säde-monikulmio-yhteentörmäystesteihin vaadittuja laskutoimituksia, olisi hyvä hakea cache-muistiin etukäteen ja pitää se siellä niin kauan kuin tarvitaan. Tämä vaatii tietysti erittäin matalan tason optimointia. \citep[.]{wald01}\\
+
+Toinen tapa välttää muistihausta aiheutuvaa latenssia on ampua maisemaan yksittäisten säteiden sijaan niin sanottuja \emph{sädepaketteja} (engl. \emph{Ray Packets}). Monet nykyaikaiset prosessorit tukevat SIMD-komentoja (\emph{Single Instruction, Multiple Data}), joiden avulla voidaan suorittaa laskutoimituksia samanaikaisesti kaikille paketin säteille. \citep[.]{wald01}\\
+
+ 
+%Eräs tapa vähentää säde-monikulmio-yhteentörmäystestien määrää on pitää yllä potentiaalisesti näkyvistä monikulmioista muodostuvaa joukkoa. 
+
+%Portaalit
 %BVH:n topologia voidaan pitää muuttumattomana liikkuvassa maisemassa ja vain siirtää rajaavia tiloja objektien liikkuessa. Täten sen päivittäminen maiseman liikkuessa on helpompaa kuin tilallisten rakenteiden, kuten BSP-puun ja kd-puun. \citep[.]{wald}
-
-%Thrane väittää gradussaan, että BVH on n. 9 kertaa tehokkaampi gpu-hahmontamisessa. \citep{thrane}
-%Koska säteenseurannassa jokainen säde on riippumato muista, voidaan säteenseuranta-algoritmi suorittaa helposti rinnakkain. 
-%GPUt ovat erittäin nopeita laskemaan grafiikkaan ja kolmioihin liittyviä laskutoimituksia rinnakkain 
 
 
 \newpage
 \section{Yhteenveto}
+
+%säteenseuranta, sen hyvyys ja sen hitaus
+Kolmiulotteisten kuvien hahmontaminen on tärkeä tutkimuskohde ja viihdeteollisuuden ala. Tässä tutkielmassa on esitelty säteenseurannaksi kutsuttu hahmontamistekniikka, jolla pystytään luoda erittäin realistisia, kolmiulotteisesta maisemasta muodostettuja kuvia. Säteenseuranta-algoritmi ampuu virtuaalisesta kamerasta valon kulkua mallintavia säteitä geometrisesti määriteltyyn maisemaan ja selvittää, mitkä maiseman objektit näkyvät kameraan ja minkä värisinä. Säteenseuranta on laskennollisesti erittäin raskasta, joten sen nopeuttamista on tutkittu paljon.    \\
+
+%siirretään työtä esiprosessointivaiheeseen, avaruusjako ja objektien järjestely
+Suosittu tapa optimoida säteenseuranta-algoritmia on luoda esiprosessointivaiheessa maisemasta hierarkinen tietorakenne. Avaruutta voidaan jakaa osiin tilan suhteen muodostamalla siitä esimerkiksi BSP- tai kd-puu. Toinen tapa on ryhmitellä maiseman objekteja yhteen, ja muodostaa niiden rajaavista tiloista hierarkinen puurakenne, BVH. Näiden tietorakenteiden avulla laskentatyötä saadaan siirrettyä itse hahmontamisvaiheesta esiprosessointivaiheeseen.\\
+
+%hintafunktiolla oikeat jaot, oikein käytettynä saadaan laskettua testien määrä logaritmiseksi
+Avaruuden jakaminen tulee suorittaa huolellisesti, jotta esiprosessointivaiheessa muodostetusta tietorakenteesta olisi hyötyä. Laskemalla hintafunktio jokaista potentiaalista puuhun lisättävää alipuuta kohden voidaan valita avaruusjakopuuhun aina sellainen alipuu, jonka läpikäyminen on mahdollisimman nopeaa. Oikein muodostettuna avaruusjakorakenne vähentää tarvittavien säde-monikulmio-yhteentörmäystestien määrää luokasta $O(n)$ luokkaan $O(\log n)$, mikä on merkittävä parannus maisemassa, jossa voi olla satoja tuhansia tai miljoonia monikulmioita. \\
+
+%tarvitaan kuitenkin muitakin optimointeja, jotta saadaan reaaliaikaista
+Eri tutkimuksissa on saatu ristiriitaista tietoa siitä, mikä tietorakenne olisi tehokkain säteenseurannan nopeuttamiseen. Voidaan kuitenkin sanoa kd-puun ja BVH:n olevan soveltuvia tähän tarkoitukseen ja yhdistettynä grafiikkaprosessorien tarjoamaan tehokkaaseen rinnakkaisuuteen ja muihin optimointitekniikoihin, niillä voidaan saavuttaa reaaliaikaiseen hahmontamiseen vaadittava nopeus. Säteenseuranta tulee todennäköisesti tuomaan erittäin realistista grafiikkaa myös sovelluksiin, jotka on aiemmin hahmonnettu rasterointitekniikalla, esimerkiksi videopeleihin. \\
+
+
 %hughes sivulla 1102 on hyvä yhteenveto
-%Sädepakettien käyttö \citep{wald}
-%Portaalit
-%mailboxing thrane
 
 \clearpage
-\bibliographystyle{apalike} %apalike-finnish
+\bibliographystyle{apalike-finnish} %apalike-finnish
 \bibliography{bibliography}
 \clearpage
 \listofalgorithms
