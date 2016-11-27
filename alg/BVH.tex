@@ -1,0 +1,21 @@
+\begin{algorithm}[t]
+\small
+\KwIn{\\\texttt{monikulmiot}: monikulmiojoukko, josta alipuut rakennetaan}
+%\texttt{Polygon monikulmiot[$\,$]}:\tab monikulmiojoukko, josta alipuut rakennetaan}
+\KwOut{\\\texttt{BVH\_Node}: BVH:n sisäsolmu}
+\BlankLine
+\nonl \texttt{RAKENNA\_BVH(monikulmiot):\\}
+ \uIf{\textnormal{\texttt{monikulmiot} sisältää vain yhden tai ennalta määrätyn vähimmäismäärän monikulmoita}}{
+  \KwRet lehtisolmu, joka sisältää \texttt{monikulmiot}
+ }\Else{
+  Selvitä taso joka jakaa objektit kahteen, likimain yhtä suureen osaan\\
+  \texttt{BVH\_Node solmu}\\
+  \texttt{solmu.vasen\_lapsi} $\gets$ \texttt{RAKENNA\_BVH}(monikulmiot jaon vasemmalla puolella)\\  
+  \texttt{solmu.oikea\_lapsi} $\gets$ \texttt{RAKENNA\_BVH}(monikulmiot jaon oikealla puolella)\\
+  \texttt{solmu.rajaava\_tila} $\gets$ pienin rajaava tila, joka sisältää kaikki \texttt{monikulmiot}\\
+  \KwRet \texttt{solmu}} 
+
+\caption{\texttt{RAKENNA\_BVH}}\label{algo_bvh}
+\end{algorithm}
+
+

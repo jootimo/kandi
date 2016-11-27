@@ -1,0 +1,20 @@
+\begin{algorithm}
+\small
+\KwIn{\\$\vec{R}$: kamerasta ammuttu säde\\
+\texttt{Solmu s}: jonkin avaruusjakopuun solmu}
+\KwOut{\\Kolmio, johon säde $\vec{R}$ osui}
+\BlankLine
+\nonl \texttt{SÄDE\_PUU\_YHTEENTÖRMÄYS($\vec{R}$, s):\\}
+ \uIf{\textnormal{$\vec{R}$ osui solmun \texttt{s} kuvaamaan avaruuden osaan}}{
+   \If{\textnormal{\texttt{s} on lehtisolmu}}{
+    \KwRet \tiny SÄDE\_MONIKULMIO\_YHTEENTÖRMÄYS \small ($\vec{R}$, \texttt{s.monikulmiot})
+   }
+   \texttt{SÄDE\_PUU\_YHTEENTÖRMÄYS($\vec{R}$, s.oikea\_lapsi)}\\
+   \texttt{SÄDE\_PUU\_YHTEENTÖRMÄYS($\vec{R}$, s.vasen\_lapsi)}
+  }\Else{
+   \KwRet \texttt{NULL}
+} 
+
+\caption{\texttt{SÄDE\_PUU\_YHTEENTÖRMÄYS}}\label{algo_isect}
+\end{algorithm}
+
