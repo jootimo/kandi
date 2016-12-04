@@ -5,7 +5,7 @@
 \KwOut{\\\texttt{BVH\_Node}: BVH:n sisäsolmu}
 \BlankLine
 \nonl \texttt{RAKENNA\_BVH(monikulmiot):\\}
- \uIf{\textnormal{\texttt{monikulmiot} sisältää vain yhden tai ennalta määrätyn vähimmäismäärän monikulmoita}}{
+ \uIf{\textnormal{\texttt{monikulmiot} sisältää vain yhteen objektiin kuuluvia monikulmioita, tai ennalta määrätyn vähimmäismäärän monikulmoita}}{
   \KwRet lehtisolmu, joka sisältää \texttt{monikulmiot}
  }\Else{
   Selvitä taso joka jakaa objektit kahteen, likimain yhtä suureen osaan\\
@@ -15,7 +15,7 @@
   \texttt{solmu.rajaava\_tila} $\gets$ pienin rajaava tila, joka sisältää kaikki \texttt{monikulmiot}\\
   \KwRet \texttt{solmu}} 
 
-\caption{\texttt{RAKENNA\_BVH}}\label{algo_bvh}
+\caption{\texttt{RAKENNA\_BVH \citep{thrane}}}\label{algo_bvh}
 \end{algorithm}
 
 

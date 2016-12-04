@@ -10,17 +10,17 @@
  \texttt{positiivinen\_joukko} $\gets \emptyset$\\
  \texttt{negatiivinen\_joukko} $\gets \emptyset$\\
  \ForEach{\textnormal{\texttt{$\gamma \, \epsilon$ monikulmiot}}}{
-   \texttt{sijainti} $\gets$ \texttt{VERTAA(jakaja, $\gamma$)}\\
+   \texttt{sijainti} $\gets$ \texttt{VERTAA($\gamma$, jakaja)}\\
   \uIf{\textnormal{\texttt{sijainti} = jakajan edessä}}{
-   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma$
+   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\;\gamma$
   }
   \uElseIf{\textnormal{\texttt{sijainti} = jakajan takana}}{
-   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma$
+   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\;\gamma$
   }
   \ElseIf{\textnormal{\texttt{sijainti} = leikkaa jakajan määrittämää tasoa}}{
-   \texttt{JAA\_MONIKULMIO($\gamma$, jakaja, $\gamma_i$, $\gamma_j$)}\\
-   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\,\gamma_i$\\
-   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\,\gamma_j$
+   \texttt{JAA\_MONIKULMIO($\gamma$, jakaja, $\Gamma_{jakaja,+}$, $\Gamma_{jakaja,-}$)}\\
+   \texttt{positiivinen\_joukko} = \texttt{positiivinen\_joukko} $\cup\;\Gamma_{jakaja,+}$\\
+   \texttt{negatiivinen\_joukko} = \texttt{negatiivinen\_joukko} $\cup\;\Gamma_{jakaja,-}$
   }  
  }
 \If{\textnormal{\texttt{positiivinen\_joukko}} $\neq \emptyset$}{
@@ -30,6 +30,6 @@
  \texttt{RAKENNA\_BSP\_PUU(solmu.vasen\_lapsi, negatiivinen\_joukko)}
 }
 
-\caption{\texttt{RAKENNA\_BSP\_PUU}}\label{algo_bsp}
+\caption{\texttt{RAKENNA\_BSP\_PUU \citep{ranta}}}\label{algo_bsp}
 \end{algorithm}
 

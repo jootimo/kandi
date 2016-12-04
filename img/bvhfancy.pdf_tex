@@ -1,0 +1,72 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'bvhfancy.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{381.84959083bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.72217841)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{img/bvhfancy.pdf}}%
+    \put(0.09932689,0.64600098){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.04352882,0.60942425){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$A$}}}%
+    \put(0.33683796,0.46725913){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$B$}}}%
+    \put(0.68252388,0.48372024){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$C$}}}%
+    \put(0.09141602,0.12306965){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$D$}}}%
+    \put(0.51791154,0.1260627){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$E$}}}%
+    \put(0.86359752,0.09650723){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$F$}}}%
+    \put(0.87556921,0.34005863){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G$}}}%
+    \put(0.29044723,0.53460046){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.11822154\unitlength}\raggedright \end{minipage}}}%
+    \put(0.34282387,0.51813922){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.00748241\unitlength}\raggedright \end{minipage}}}%
+    \put(0.29493665,0.54357936){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14366162\unitlength}\raggedright \end{minipage}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{img/bvhfancy.pdf}}%
+    \put(0.41465468,0.68125509){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.94503975,0.6584046){\color[rgb]{1,0,0}\makebox(0,0)[lb]{\smash{$q$}}}%
+    \put(0.42513001,0.68724097){\color[rgb]{0,0.52941176,0}\makebox(0,0)[lb]{\smash{$r$}}}%
+    \put(0.94740002,0.55405468){\color[rgb]{0,0.51764706,0}\makebox(0,0)[lb]{\smash{$s$}}}%
+    \put(0.8818895,0.1971452){\color[rgb]{0,0.52941176,0}\makebox(0,0)[lb]{\smash{$t$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{img/bvhfancy.pdf}}%
+  \end{picture}%
+\endgroup%
