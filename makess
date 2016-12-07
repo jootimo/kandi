@@ -1,0 +1,5 @@
+#compile into a pdf-file
+latex -output-format=pdf slideshow
+bibtex slideshow
+latex -output-format=pdf slideshow
+latex -output-format=pdf slideshow
