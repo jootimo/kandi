@@ -30,6 +30,17 @@
 
 \linespread{1.24} %1.24 olisi rivivali 1.5
 \sloppy % Vahentaa tavutuksen tarvetta, "leventamalla" rivin keskella olevia valilyönteja.
+\babelhyphenation[finnish]{tie-tokonegrafiikan}
+\babelhyphenation[finnish]{tie-torakennetta}
+\babelhyphenation[finnish]{koko-naism\"{a}\"{a}r\"{a}\"{a}}
+\babelhyphenation[finnish]{perus-k\"{a}sitteit\"{a}}
+\babelhyphenation[finnish]{esi-merkiksi}
+\babelhyphenation[finnish]{s\"{a}teenseurantateknii-kalla}
+\babelhyphenation[finnish]{tek-niik-kaa}
+\babelhyphenation[finnish]{ta-sa-pai-noi-nen}
+\babelhyphenation[finnish]{sii-t\"{a}}
+\babelhyphenation[finnish]{liik-ku-es-sa}
+\babelhyphenation[finnish]{ava-ruus-ja-ko-puu-hun}
 
 % Yleisimmin kayttettaville komennoille voi maaritella lyhynnemerkintöja
 % esimerkiksi
@@ -71,9 +82,9 @@ Kolmiulotteisen tietokonegrafiikan tutkimuksella on ollut merkittävä vaikutus 
 
 Grafiikan piirtämistä kolmiulotteisista malleista kaksiulotteisiksi kuviksi kutsutaan hahmontamiseksi (engl. \emph{rendering}). Hahmontamisen lähtökohtana on kuvattava maisema (engl. \emph{scene}), joka sisältää objekteja ja valonlähteitä. Objektit ja valonlähteet on voitava mallintaa matemaattisesti, jotta niille voidaan määrittää sijainti ja suuntaus ja jotta niiden välisiä etäisyyksiä ja suhteita voidaan laskea. Hahmontaminen tapahtuu aina jostakin kuvakulmasta, ja tätä varten määritellään virtuaalinen kamera, jolla on oma sijaintinsa ja suuntauksensa maisemassa. Tämän jälkeen on selvitettävä, mitkä objektit kamera näkee, miten objekteihin osuvat valonsäteet vaikuttavat niiden väriin ja kuvan varjostukseen. Lopuksi lasketaan mitkä värit projisoidaan kuvatason mihinkin pikseliin. \citep[.]{janke}\\
 
-1960-luvulla tietokonegrafiikkaa käytettiin lähinnä teollisuuden komponenttisuunnittelussa ja arkkitehtuurissa. Tietokoneella osattiin piirtää objektien ääriviivoja (engl. \emph{wireframe}), mutta varjostustekniikoita ei tunnettu. IBM:n tutkija Arthur Appel esitteli algoritmin, joka mallinsi valonsäteitä laskemalla suoran yhtälöitä kuvasta maisemaan ja siitä valonlähteisiin. Tämän tekniikan avulla voitiin piirtää yksinkertaisia varjostuksia. \citep[.]{appel}. Myöhemmin tästä säteenseurannaksi nimetystä tekniikasta tuli erittäin suosittu.\\
+1960-luvulla tietokonegrafiikkaa käytettiin lähinnä teollisuuden komponenttisuunnittelussa ja arkkitehtuurissa. Tietokoneella osattiin piirtää objektien ääriviivoja (engl. \emph{wireframe}), mutta varjostustekniikoita ei tunnettu. IBM:n tutkija Arthur Appel esitteli algoritmin, joka mallinsi valonsäteitä laskemalla suoran yhtälöitä kuvasta maisemaan ja siitä valonlähteisiin. Tämän tekniikan avulla voitiin piirtää yksinkertaisia varjostuksia. \citep{appel}. Myöhemmin tästä säteenseurannaksi nimetystä tekniikasta tuli erittäin suosittu.\\
 
-Jo Appel totesi säteenseurannan olevan laskennollisesti erittäin raskasta. Vaikka tietokoneiden ja varsinkin grafiikkaprosessoreiden laskentateho kasvaa jatkuvasti, ei grafiikan tuottaminen ole vieläkään halpaa tai nopeaa. Kuvista halutaan jatkuvasti realistisempia, ja yksityiskohtaisemmat kuvattavat mallit ja monimutkaiset valaisutekniikat vaativat erittäin paljon laskentatehoa. Esimerkiksi elokuvastudio Pixarin Monsterit-yliopisto -animaatioelokuvan piirtäminen vaati yli sata miljoonaa prosessorituntia \citep{monsterit}. Tämän takia tutkimuksen kohteena on ollut jo pitkään entistä nopeampien hahmontamistekniikoiden kehittäminen.\\
+Jo Appel totesi säteenseurannan olevan laskennollisesti erittäin raskasta. Vaikka tietokoneiden ja varsinkin grafiikkaprosessoreiden laskentateho kasvaa jatkuvasti, ei grafiikan tuottaminen ole vieläkään halpaa tai nopeaa. Kuvista halutaan jatkuvasti realistisempia, ja yksityiskohtaisemmat kuvattavat mallit ja monimutkaiset valaisutekniikat vaativat erittäin paljon laskentatehoa. Esimerkiksi elokuvastudio Pixarin Monsterit-yliopisto \mbox{-animaatioelokuvan} piirtäminen vaati yli sata miljoonaa prosessorituntia \citep{monsterit}. Tämän takia tutkimuksen kohteena on ollut jo pitkään entistä nopeampien hahmontamistekniikoiden kehittäminen.\\
 %Prosessoritunti?
 
 1980-luvulla kehitettiin menetelmiä, joilla voitiin nopeuttaa hahmontamista vähentämällä valonsäteiden ja maiseman osumatarkasteluiden määrää. Steven Rubin ja Turner Whitted esittelivät tekniikan, jossa maisema ositetaan esiprosessointivaiheessa manuaalisesti hierarkisiin laatikoihin. Säteiden ja laatikoiden osumia tarkastelemalla voitiin vähentää operaatioiden kokonaismäärää. \citep[.]{rubin} Henry Fuchs et al. kehittivät toisen metodin, johon kuului myös esiprosessointivaihe, tällä kertaa tietokoneen suorittamana. Maiseman objektit oli jaettu pienempiin monikulmioihin, joista valittiin binääripuun juureksi mahdollisimman keskellä maisemaa oleva. \citep[.]{fuchs}\\
@@ -87,7 +98,7 @@ Tässä tutkielmassa esitellään avaruuden jakamiseen perustuvia tietorakenteit
 
 Kolmiulotteisten kuvien hahmontamisen kohteena ovat \emph{objektit}, jotka mallintavat jotakin esinettä tai muotoa avaruudessa $\R^3$. Objektit voidaan esittää tietokoneen muistissa taulukkona pisteitä $P=(x,y,z)\;\epsilon\,\R^3$: esimerkiksi kolmiota voidaan kuvata kolmella pisteellä ja palloa kahdella pisteellä, jotka esittävät sen keskipistettä ja yhtä pistettä sen pinnalla. \citep[.]{angel}\\
 
-Objektit jaetaan lähes kaikissa ei-triviaaleissa tapauksissa monikulmioihin (engl. \emph{Polygon}). Monikulmio $\gamma = \diamond P_1P_2...P_n, \; n > 2$, on samassa tasossa olevien kärkien $P_1,...,P_n$ muodostaman murtoviivan rajaama alue, jonka kärkien muodostamat janat $P_i P_{i+1}$ eivät leikkaa toisiaan muualla kuin kärjissä \citep{harju}. Useimmiten grafiikkasovelluksissa ja -rajapinnoissa valitaan monikulmioiden kärkien lukumääräksi kolme, sillä kolmioiden kärjet muodostavat aina tason, ja grafiikkaprosessorit osaavat operoida kolmioilla erittäin nopeasti \citep{angel}.\\
+Objektit jaetaan lähes kaikissa ei-triviaaleissa tapauksissa monikulmioihin (engl. \emph{polygon}). Monikulmio $\gamma = \diamond P_1P_2...P_n, \; n > 2$, on samassa tasossa olevien kärkien $P_1,...,P_n$ muodostaman murtoviivan rajaama alue, jonka kärkien muodostamat janat $P_i P_{i+1}$ eivät leikkaa toisiaan muualla kuin kärjissä \citep{harju}. Useimmiten grafiikkasovelluksissa ja -rajapinnoissa valitaan monikulmioiden kärkien lukumääräksi kolme, sillä kolmioiden kärjet muodostavat aina tason, ja grafiikkaprosessorit osaavat operoida kolmioilla erittäin nopeasti \citep{angel}.\\
 
 Objektien sisäpuoli halutaan yleensä jättää huomioimatta, joten monikulmioille on määriteltävä, kummalla puolella on niiden etupuoli. Kolmiot ovat tässäkin suhteessa hyvä valinta monikulmioiden muodoksi, sillä kolmiolle $\triangle P_1P_2P_3$ voidaan helposti laskea etupuolen määrittävä normaali $n$ ristitulolla $(P_2-P_1) \times (P_3-P_2)$. Huomioitavaa on, että normaalin suunta riippuu siitä, missä järjestyksessä kärjet $P_1, P_2$ ja $P_3$ on määritelty. \citep[.]{hughes}\\
 
@@ -95,9 +106,9 @@ Jotta voitaisiin tarkastella objektien, valonlähteiden ja kuvakulman eli \emph{
 
 \subsection{Säteenseuranta}
 
-\emph{Säteenseuranta} (engl. \emph{Ray Tracing}) on hahmontamistekniikka, jolla voidaan piirtää erittäin fotorealistisia kuvia. Säteenseuranta pyrkii mallintamaan valonsäteitä, jotka saavat alkunsa valonlähteistä, kulkevat avaruudessa ja osuvat objekteihin, jolloin ne valaisevat niitä, kimpoavat niistä toisiin objekteihin ja muodostavat varjoja. Jotkut valonsäteet löytävät lopulta tiensä katsojan silmiin eli kameraan. Koska olisi mahdotonta selvittää jokaisen valonsäteen kulkua avaruudessa, säteenseuranta-algoritmi ottaa huomioon vain ne säteet, jotka todella osuvat kameraan. Valonsäteitä seurataan siis käänteisessä järjestyksessä, kamerasta objekteihin, ja niistä valonlähteisiin. \citep[.]{janke} Säteenseurantatekniikkaa on havainnollistettu kuvassa \ref{raytracing}.\\
+\emph{Säteenseuranta} (engl. \emph{ray tracing}) on hahmontamistekniikka, jolla voidaan piirtää erittäin fotorealistisia kuvia. Säteenseuranta pyrkii mallintamaan valonsäteitä, jotka saavat alkunsa valonlähteistä, kulkevat avaruudessa ja osuvat objekteihin, jolloin ne valaisevat niitä, kimpoavat niistä toisiin objekteihin ja muodostavat varjoja. Jotkut valonsäteet löytävät lopulta tiensä katsojan silmiin eli kameraan. Koska olisi mahdotonta selvittää jokaisen valonsäteen kulkua avaruudessa, säteenseuranta-algoritmi ottaa huomioon vain ne säteet, jotka todella osuvat kameraan. Valonsäteitä seurataan siis käänteisessä järjestyksessä, kamerasta objekteihin, ja niistä valonlähteisiin. \citep[.]{janke} Säteenseurantatekniikkaa on havainnollistettu kuvassa \ref{raytracing}.\\
 
-Säteenseuranta-algoritmi muodostaa sille syötteenä annetusta kolmiulotteisesta maisemasta kameran sijainnin perusteella kaksiulotteisen kuvan. Jokaisen kuvatason pikselin läpi ammutaan säde $\vec{R}=O+t\vec{D}$, missä $t\,\epsilon\,\R$, $O$ on kameran sijainti maailmakoordinaatistossa ja normalisoitu vektori $\vec{D}$ kuvaa säteen kulkusuuntaa. Säteellä etsitään törmäyspistettä lähimmän objektin kanssa eli sellaista mahdollisimman pientä arvoa $t$, että piste $P=O+t\vec{D}$ on jonkin objektin pinnalla. Tällöin osuman saaneen objektin piste $P$ voi näkyä kameraan, mikäli siihen osuu valoa.\footnote{Tämä ratkaisee niin kutsutun \emph{näkyvyysongelman}: onko piste $P$ näkyvissä pisteestä $O$ katsottuna?} Osumakohdasta ammutaan uusi, varjostussäteeksi kutsuttu säde. Jos varjostussäde osuu suoraan tai kimmoten muista objekteista valonlähteeseen, lankeaa objektin pinnalle valoa.\footnote{Tässä tutkielmassa jätetään huomiomatta varjostus, joka on oleellinen osa hahmontamista. Hyvä lähtöpiste realistiseen varjostukseen ja valaistukseen tutustumiseen on esimerkiksi James Kajiyan hahmontamisyhtälö \citep[ks.][]{kajiya}.}  \citep[.]{janke} Jos monikulmioiden muodoksi on valittu kolmiot, voidaan säteen ja kolmion leikkaus määrittää esimerkiksi nopealla Möllerin-Trumboren algoritmilla \citep[ks.][]{moller}. Säteenseurantatekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}.\\
+Säteenseuranta-algoritmi muodostaa sille syötteenä annetusta kolmiulotteisesta maisemasta kameran sijainnin perusteella kaksiulotteisen kuvan. Jokaisen kuvatason pikselin läpi ammutaan säde $\vec{R}=O+t\vec{D}$, missä $t\,\epsilon\,\R$, $O$ on kameran sijainti maailmakoordinaatistossa ja normalisoitu vektori $\vec{D}$ kuvaa säteen kulkusuuntaa. Säteellä etsitään törmäyspistettä lähimmän objektin kanssa eli sellaista mahdollisimman pientä arvoa $t$, että piste $P=O+t\vec{D}$ on jonkin objektin pinnalla. Tällöin osuman saaneen objektin piste $P$ voi näkyä kameraan, mikäli siihen osuu valoa.\footnote{Tämä ratkaisee niin kutsutun \emph{näkyvyysongelman}: onko piste $P$ näkyvissä pisteestä $O$ katsottuna?} Osumakohdasta ammutaan uusi, varjostussäteeksi kutsuttu säde. Jos varjostussäde osuu suoraan tai kimmoten muista objekteista valonlähteeseen, lankeaa objektin pinnalle valoa.\footnote{Tässä tutkielmassa jätetään huomiomatta varjostus, joka on oleellinen osa hahmontamista. Hyvä lähtöpiste realistiseen varjostukseen ja valaistukseen tutustumiseen on esimerkiksi James Kajiyan hahmontamisyhtälö \citep[ks.][]{kajiya}.}  \citep[.]{janke} Jos monikulmioiden muodoksi on valittu kolmiot, voidaan säteen ja kolmion mahdollinen leikkaus määrittää esimerkiksi nopealla Möllerin-Trumboren algoritmilla \citep[ks.][]{moller}. Säteenseurantatekniikan pseudokoodi on esitetty algoritmissa \ref{algo_raytrace}.\\
 
 
 \begin{figure}
@@ -106,12 +117,12 @@ Säteenseuranta-algoritmi muodostaa sille syötteenä annetusta kolmiulotteisest
  \vspace{0.4cm}
  \caption{Säteen ampuminen kuvan läpi maisemaan \citep{janke}}
  \label{raytracing}
- \vspace{-0.5cm}
+ %\vspace{-0.5cm}
 \end{figure}
 
-Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman monikulmiot ja testattava, osuuko säde niihin. Säteiden ja monikulmioiden leikkauksien määrittämiseen joudutaan joissain tapauksissa käyttämään jopa 95 \% koko laskenta-ajasta \citep{whitted}. Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien monikulmioiden määrää jokaista sädettä kohti saataisiin vähennettyä. Yleisesti käytetty tapa leikkaustestien vähentämiseksi on muodostaa maisemasta hierarkinen tietorakenne ennen varsinaista hahmontamista. Tätä tietorakennetta läpikäymällä löydetään nopeasti monikulmio, jonka pinnalla säteen ja objektin leikkauspiste $P$ on. \citep[.]{rubin}\\
+Algoritmin suoritusnopeutta rajoittaa se, että jokaista sädettä kohti on käytävä läpi kaikki maiseman monikulmiot ja testattava, osuuko säde niihin. Tarvittavien säde-monikulmio-leikkaustestien määrä on siis $O(mn)$, missä $m$ on kuvan pikselien ja $n$ maiseman monikulmioiden määrä. Näiden testien suorittamiseen kuluu joissain tapauksissa jopa 95 \% koko laskenta-ajasta \citep{whitted}. Algoritmia saataisiin siis nopeutettua huomattavasti, jos testattavien monikulmioiden määrää jokaista sädettä kohti saataisiin vähennettyä. Yleisesti käytetty tapa leikkaustestien vähentämiseksi on muodostaa maisemasta hierarkinen tietorakenne ennen varsinaista hahmontamista. Tätä tietorakennetta läpikäymällä löydetään nopeasti monikulmio, jonka pinnalla säteen ja objektin leikkauspiste $P$ on. \citep[.]{rubin}\\
 
-Säteenseurantaa on perinteisesti sen hitauden vuoksi hyödynnetty hahmontamisessa, jossa käytetty laskenta-aika saakin venyä pitkäksi (engl. \emph{Offline Rendering}). Peleissä, virtuaalitodellisuudessa ja muissa reaaliaikaista hahmontamista vaativissa sovelluksissa on käytetty pitkälti niinkutsuttua kolmioiden rasterointitekniikkaa (engl. \emph{rasterization}). Säteenseurannalla hahmonnetut kuvat ovat kuitenkin huomattavasti realistisempia kuin rasteroinnilla saavutetut, joten reaaliaikainen hahmontaminen säteenseurantatekniikalla on suosittu tutkimuskohde. \citep[.]{wald04}  
+Säteenseurantaa on perinteisesti sen hitauden vuoksi hyödynnetty hahmontamisessa, jossa käytetty laskenta-aika saakin venyä pitkäksi (engl. \emph{offline rendering}). Peleissä, virtuaalitodellisuudessa ja muissa reaaliaikaista hahmontamista vaativissa sovelluksissa on käytetty pitkälti niinkutsuttua kolmioiden rasterointitekniikkaa (engl. \emph{rasterization}). Säteenseurannalla hahmonnetut kuvat ovat kuitenkin huomattavasti realistisempia kuin rasteroinnilla saavutetut, joten reaaliaikainen hahmontaminen säteenseurantatekniikalla on suosittu tutkimuskohde. \citep[.]{wald04}  
 
 \input{alg/raytracing.tex}
 \vspace{-0.5cm}
@@ -143,9 +154,9 @@ class BSP\_Node\\
 
 \input{alg/bsp.tex}
 %LÄHDE!
-\vspace{-0.5cm}
+%\vspace{-0.5cm}
 
-Kuvissa \ref{bsp1} ja \ref{bsp2} on esitetty esimerkki BSP-puun muodostamisesta. Kuvassa \ref{bsp11} on yksinkertaisuuden vuoksi esitetty monikulmiot $\Gamma=\{A,B,C,D,E,F,G\}$ sisältävä maisema kaksiulotteisena tasona. Kuvassa \ref{bsp12} ensimmäiseksi jakomonikulmioksi on valittu $G$, jonka positiiviselle puolelle jäävät monikulmiot $\Gamma_{g,+} = \{A,B,C\}$, ja negatiiviselle puolelle $\Gamma_{g,-} = \{D,E,F\}$. Jaon g negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakomonikulmioksi $E$, mutta jos positiivisella puolella valitaan jakomonikulmioksi $B$, joudutaan monikulmio $C$ jakamaan osiin $C_1$ ja $C_2$. Jakolinjan $b$ negatiiviselle puolelle jää vain yksi monikulmio $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakomonikulmioksi $A$ syntyy kuvan \ref{bsp2} mukainen BSP-puu.\\
+Kuvissa \ref{bsp1} ja \ref{bsp2} on esitetty esimerkki BSP-puun muodostamisesta. Kuvassa \ref{bsp11} on yksinkertaisuuden vuoksi esitetty monikulmiot $\Gamma=\{A,B,C,D,E,F,G\}$ sisältävä maisema kaksiulotteisena tasona. Kuvassa \ref{bsp12} ensimmäiseksi jakomonikulmioksi on valittu $G$, jonka positiiviselle puolelle jäävät monikulmiot $\Gamma_{g,+} = \{A,B,C\}$, ja negatiiviselle puolelle $\Gamma_{g,-} = \{D,E,F\}$. Jaon $g$ negatiivinen puoli saadaan jaettua loppuun asti ongelmitta valitsemalla jakomonikulmioksi $E$, mutta jos positiivisella puolella valitaan jakomonikulmioksi $B$, joudutaan monikulmio $C$ jakamaan osiin $C_1$ ja $C_2$. Jakosuoran $b$ negatiiviselle puolelle jää vain yksi monikulmio $C_2$, joten jaettavaksi jää vain $b$:n positiivinen puoli. Valitsemalla viimeiseksi jakomonikulmioksi $A$ syntyy kuvan \ref{bsp2} mukainen BSP-puu.\\
 
 \begin{figure}[htp]
  \centering
@@ -164,25 +175,26 @@ Kuvissa \ref{bsp1} ja \ref{bsp2} on esitetty esimerkki BSP-puun muodostamisesta.
   \label{bsp12}
  \end{subfigure}
  \caption{Tason jakaminen}
- \vspace{-0.5cm}
+ %\vspace{-0.5cm}
  \label{bsp1}
 \end{figure}
 
 
-BSP-puun kokoon ja muotoon vaikuttaa suuresti avaruuden jakavan monikulmion valinta. Pahimmassa tapauksessa kaikki monikulmio $\Gamma\backslash\{\gamma_k\}$ jäävät monikulmion $\gamma_k$ positiiviselle tai negatiiviselle puolelle jokaisella jaolla $k$. Tällöin puusta muodostuu pikemminkin ketjun muotoinen. Sama monikulmio voi myös kuulua moneen BSP-puun alipuuhun, jos jonkun ylemmällä tasolla avaruuden jakavan monikulmion $\gamma_k$ muodostama jakolinja leikkaa tätä monikulmiota. \citep[.]{samet} Toinen lähestymistapa jakolinjalla oleviin monikulmioihin on halkaista ne osiin. Tämäkin tapa on epäedullinen, sillä se lisää maisemassa olevien monikulmioiden määrää. \citep[.]{ranta}\\ %Kun otetaan huomioon nämä rajoitteet, ei BSP-puun koolle voida antaa tarkkaa ylärajaa \citep{hughes}.\\
+BSP-puun kokoon ja muotoon vaikuttaa suuresti avaruuden jakavan monikulmion valinta. Pahimmassa tapauksessa kaikki monikulmiot $\Gamma\backslash\{\gamma_k\}$ jäävät monikulmion $\gamma_k$ positiiviselle tai negatiiviselle puolelle jokaisella jaolla $k$. Tällöin puusta muodostuu pikemminkin ketjun muotoinen. Sama monikulmio voi myös kuulua moneen BSP-puun alipuuhun, jos jonkun ylemmällä tasolla avaruuden jakavan monikulmion $\gamma_k$ muodostama jakolinja leikkaa tätä monikulmiota. \citep[.]{samet} Toinen lähestymistapa jakolinjalla oleviin monikulmioihin on halkaista ne osiin. Tämäkin tapa on epäedullinen, sillä se lisää maisemassa olevien monikulmioiden määrää. \citep[.]{ranta}\\ %Kun otetaan huomioon nämä rajoitteet, ei BSP-puun koolle voida antaa tarkkaa ylärajaa \citep{hughes}.\\
 
 BSP-puuta rakennettaessa tavoitteena on muodostaa mahdollisimman tasapainoinen binääripuu valitsemalla jokaisella jakokerralla jakajaksi sellainen monikulmio $\gamma_k$, jonka positiivisella ja negatiivisella puolella on likimain yhtä paljon monikulmioita, eli $\abs{\Gamma_{k,+}} \approx \abs{\Gamma_{k,-}}$. Tällöin  $n$:n monikulmion joukousta muodostetun BSP-puun syvyys olisi $O(\log n)$, mikäli rekursiivista jakoa jatketaan kunnes jokainen monikulmio on omassa lehdessään. Koska puun solmuja syntyy lisää, kun jakolinjan leikkaavat monikulmiot jaetaan osiin, tai jakolinjalla oleva monikulmio sisällytetään useaan alipuuhun, voidaan puun logaritmista tavoitesyvyyttä pitää vain alarajana. \citep[.]{hughes} $n$ monikulmiota sisältävästä maisemasta rakennetun BSP-puun syvyys on siis $\Omega(\log n)$.\\
 
 \input{img/bsp2.tex}
 
-BSP-puu voidaan rakentaa ennen hahmontamista esiprosessointivaiheessa. Hahmontamisvaiheessa sitä voidaan käyttää vähentämään säde-monikulmio leikkaustestien määrää. Kamerasta ammuttua sädettä verrataan ensin BSP-puun juurena toimivaan monikulmioon. Jos säde leikkaa monikulmion $\gamma_k$ muodostaman avaruuden jakavan tason, säde voi osua johonkin monikulmioon molemmissa joukoissa ${\Gamma_{k,+}}$ ja ${\Gamma_{k,-}}$, eli joudutaan tarkastelemaan molempia alipuita. Jos säde ei leikkaa jakotasoa, siirrytään tarkastelemaan vain toista alipuuta. Säteen $\vec{R}=O+t\vec{D}$ osumista tasoon $T$ voidaan testata laskemalla etäisyys $t=\dfrac{-\vec{n}\cdot(O-Q_0)}{\vec{n}\cdot\vec{D}}$, missä $\vec{n}$ on tason $T$ normaalivektori ja $Q_0$ on jokin tason $T$ piste. Säde $\vec{R}$ osuu tasoon $T$ jos sijoittamalla $t$ säteen yhtälöön, on piste $Q = O+t\vec{D}$ tasossa $T$. Tämä pitää paikkansa jos $(Q-Q_0)\cdot\vec{n} = 0$. \citep[.]{hughes} Toistamalla säteiden ja avaruuden jakavien tasojen leikkauksia rekursiivisesti, päädytään lopulta BSP-puun juureen ja voidaan testata, osuuko säde monikulmioihin. \citep[.]{ranta}\\
+BSP-puu voidaan rakentaa ennen hahmontamista esiprosessointivaiheessa. Hahmontamisvaiheessa sitä voidaan käyttää vähentämään säde-monikulmio-leikkaustestien määrää. Kamerasta ammuttua sädettä verrataan ensin BSP-puun juurena toimivaan monikulmioon. Jos säde leikkaa monikulmion $\gamma_k$ muodostaman avaruuden jakavan tason, säde voi osua johonkin monikulmioon molemmissa joukoissa ${\Gamma_{k,+}}$ ja ${\Gamma_{k,-}}$, eli joudutaan tarkastelemaan molempia alipuita. Jos säde ei leikkaa jakotasoa, siirrytään tarkastelemaan vain toista alipuuta.\\
+
+Säteen $\vec{R}=O+t\vec{D}$ osumista tasoon $T$ voidaan testata laskemalla etäisyys $t=\dfrac{-\vec{n}\cdot(O-Q_0)}{\vec{n}\cdot\vec{D}}$, missä $\vec{n}$ on tason $T$ normaalivektori ja $Q_0$ jokin tason $T$ piste. Säde $\vec{R}$ osuu tasoon $T$, jos sijoittamalla $t$ säteen yhtälöön, on piste $Q = O+t\vec{D}$ tasossa $T$. Tämä pitää paikkansa jos $(Q-Q_0)\cdot\vec{n} = 0$. \citep[.]{hughes} Toistamalla säteiden ja avaruuden jakavien tasojen leikkauksia rekursiivisesti, päädytään lopulta BSP-puun juureen ja voidaan testata, osuuko säde monikulmioihin. \citep[.]{ranta}\\
 %polygonien lisääminen kesken renderöinnin työlästä
 
 \subsubsection{kd-puu}
 
 BSP-puun erikoistapaus on \emph{kd-puu}, eli k-ulotteinen puu (engl. \emph{k-dimensional tree}). 
-%mites ku tässä virke alkaa pienellä?
-kd-puussa avaruuden jakavaa tasoa ei valita jakavan monikulmion muodostaman sivun mukaan, vaan jaot tehdään siten, että jakotaso on samansuuntainen jonkin koordinaattiakselin kanssa. Yleisin tapa muodostaa kd-puu kolmiulotteisen maiseman monikulmioista on valita jakotaso vuorotellen maailmakoordinaatiston $x$-, $y$- ja $z$-akseleiden suuntaiseksi. kd-puun jokaiseen solmuun tallennetaan  
+kd-puussa avaruuden jakavaa tasoa ei valita jakavan monikulmion muodostaman tason mukaan, vaan jaot tehdään siten, että jakotaso on samansuuntainen jonkin koordinaattiakselin kanssa. Yleisin tapa muodostaa kd-puu kolmiulotteisen maiseman monikulmioista on valita jakotaso vuorotellen maailmakoordinaatiston $x$-, $y$- ja $z$-akseleiden suuntaiseksi. kd-puun jokaiseen solmuun tallennetaan  
 % tieto jakosuunnasta eli minkä akselin vastaisesti avaruusjako on tehty. 
 jakavan monikulmion sijaan jakava taso. Tällöin monikulmioiden jakaminen solmun lapsiin onnistuu helposti vertaamalla niiden sijaintia jakotasoon. Esimerkiksi jos avaruuden jakava taso valitaan samansuuntaiseksi $z$-akselin kanssa, tallennetaan solmun vasempaan lapseen monikulmiot, joiden sijainnin $x$-koordinaatin arvo on pienempi kuin jakotason. Oikeaan lapseen taas tallennetaan monikulmiot, jotka ovat jakotason positiivisella puolella $x$-akselin suhteen. \citep[.]{samet} Avaruutta jaetaan rekursiivisesti osiin kunnes lehtisolmuissa on jokin ennaltamäärätty määrä monikulmioita. kd-puu muodostetaan vastaavalla algoritmilla kuin BSP-puun rakentamista kuvaava algoritmi \ref{algo_bsp}.\\
 
@@ -193,7 +205,7 @@ Yleisen BSP-puun tapaan myös kd-puuta rakennettaessa avaruuden jakavien tasojen
  \def\svgwidth{0.9\linewidth}
  \input{img/kd1.pdf_tex}
  \caption{Kuvan \ref{bsp11} taso jaettuna kuusi kertaa koordinaattiakselien suuntaisesti}
- \vspace{-0.5cm} 
+ %\vspace{-0.5cm} 
  \label{bsp3}
 \end{figure}
 
@@ -203,7 +215,7 @@ Muodostamalla esiprosessointivaiheessa maiseman monikulmioista BSP-puun sijaan k
 
 \input{img/bsp4.tex}
 
-Muita BSP-puun erikoistapauksia ovat \emph{quad}- ja \emph{oct-puut}. Quad-puuta muodostettaessa avaruuden osa jaetaan aina neljään yhtä suureen kuutioon kunnes jokin pysähtymisehto saavutetaan. Oct-puun tapauksessa kuutioiden määrä on kahdeksan \citep[.]{samet}. Lukuunottamatta ennaltamäärättyä avaruusjakojen määrää quad- ja oct-puut ovat kuten yllä määritellyt kd-puut.
+Muita BSP-puun erikoistapauksia ovat \emph{quad}- ja \emph{oct-puut}. Quad-puuta muodostettaessa avaruuden osa jaetaan aina neljään yhtä suureen laatikkoon kunnes jokin pysähtymisehto saavutetaan. Oct-puun tapauksessa laatikoiden määrä on kahdeksan \citep[.]{samet}. Lukuunottamatta ennaltamäärättyä avaruusjakojen määrää quad- ja oct-puut ovat kuten yllä määritellyt kd-puut.
 
 \subsection{Rajaavien tilojen hierarkia}
 
@@ -220,24 +232,25 @@ BVH:n hyödyntäminen hahmontamisessa säteenseurantatekniikalla on yksinkertais
  \def\svgwidth{0.8\linewidth}
  \input{img/bvhfancy.pdf_tex}
  \caption{Objektijoukko jaettuna rajaaviin tiloihin}
- \vspace{-0.5cm} 
+ %\vspace{-0.5cm} 
  \label{bvh}
 \end{figure}
 
-Kuvassa \ref{bvh} on esimerkki objektijoukosta $\{A,B,C,D,E,F,G\}$ tasossa. Tasolle on ensin määritelty rajaava tila $q$, joka sisältää kaikki objektit. Tilan $q$ sisällä on pienempiä objektiosajoukkoja sisältävät tilat $r$,$s$ ja $t$. Lopuksi jokaiselle objektille on määritelty omat rajaavat tilansa. Objektijoukosta muodostettu BVH-puu on esitetty kuvassa \ref{bvhtree}.   
-
 \input{img/bvhtree.tex}
 
-Kuten BSP- ja kd-puun tapauksissa, myös BVH:n tuoma etu hahmontamisessa riippuu siitä, miten hyvin jako rajaaviin tiloihin onnistuu. Kuvassa \ref{bvh1} havainnollistetaan rajaavan tilan valinnan merkitystä. Kuvassa on pisteistä kaksiulotteisessa tasossa ja kaksi vaihtoehtoa niitä rajaavaksi tilaksi. Koordinaattiakseleiden suuntainen laatikko (a) ei ole tässä tapauksessa optimaalinen, vaan jättää pisteiden ja laatikoiden väliin liikaa tyhjää tilaa. Tällöin monet laatikon lävistävät säteet eivät osu itse pisteisiin. Tiiviimpi laatikko on esitetty vieressä (b).\\
+Kuvassa \ref{bvh} on esimerkki objektijoukosta $\{A,B,C,D,E,F,G\}$ tasossa. Tasolle on ensin määritelty rajaava tila $q$, joka sisältää kaikki objektit. Tilan $q$ sisällä on pienempiä objektiosajoukkoja sisältävät tilat $r$,$s$ ja $t$. Lopuksi jokaiselle objektille on määritelty omat rajaavat tilansa. Objektijoukosta muodostettu BVH-puu on esitetty kuvassa \ref{bvhtree}.   \\
 
-\begin{figure}
+\begin{figure}[htp]
  \centering 
  \includegraphics[width=0.8\textwidth]{img/bvh1.png}
  \vspace{0.4cm}
  \caption{Kaksi vaihtoehtoa pistejoukon rajaavaksi tilaksi \citep{lengyel}}%s212
- \vspace{-0.5cm} 
+ %\vspace{-0.5cm} 
  \label{bvh1}
 \end{figure}
+
+Kuten BSP- ja kd-puun tapauksissa, myös BVH:n tuoma etu hahmontamisessa riippuu siitä, miten hyvin jako rajaaviin tiloihin onnistuu. Kuvassa \ref{bvh1} havainnollistetaan rajaavan tilan valinnan merkitystä. Kuvassa on pisteistä kaksiulotteisessa tasossa ja kaksi vaihtoehtoa niitä rajaavaksi tilaksi. Koordinaattiakseleiden suuntainen laatikko (a) ei ole tässä tapauksessa optimaalinen, vaan jättää pisteiden ja laatikoiden väliin liikaa tyhjää tilaa. Tällöin monet laatikon lävistävät säteet eivät osu itse pisteisiin. Tiiviimpi laatikko on esitetty vieressä (b).\\
+
 
 Säteen $\vec{R}=O+t\vec{D}$ ja pallon $S$ leikkausta voidaan tarkastella määrittämällä ensin vektori $\vec{a} = C - O$, missä $C$ on pallon $S$ keskipiste. Tällöin saadaan suorakulmainen kolmio, jossa $\vec{a}$ on hypotenuusa ja $\dfrac{\vec{a}\cdot\vec{v}}{\abs{\vec{v}}}$ on kateetti. Laskemalla Pythagoraan lauseella toisen kateetin pituus $d = \sqrt{\vec{a}^2 - \left(\dfrac{\vec{a}\cdot\vec{v}}{\abs{\vec{v}}}\right)^2}$ saadaan selville mikä on pienin säteen ja pallon keskipisteen välinen etäisyys. Jos $\abs{d} < r$, missä $r$ on pallon $S$ säde, lävistää säde $R$ pallon ja voi osua sen sisältämiin monikulmioihin. \citep[.]{janke}    
 
@@ -250,9 +263,9 @@ Tässä luvussa vertaillaan luvussa 3 esiteltyjä tietorakenteita ja selvitetä�
 
 \subsection{Tietorakenteiden alustaminen}
 
-Rakennettaessa kd-puuta on otettava kantaa, mitä tehdään monikulmioille, jotka ulottuvat avaruuden jakavan tason molemmille puolille. Sekä monikulmion jakaminen osiin, että sen sisällyttäminen useaan solmuun kasvattavat kd-puuta turhaan. kd-puusta saatava hyöty on suurin silloin, kun avaruusjakoja on tehty mahdollisimman paljon ja lehtisolmuissa on mahdollisimman vähän monikulmioita. Tällöin todennäköisyys sille, että monikulmioita jää jakotasojen molemmin puolin on suuri ja tietorakenteen vaatima tallennustila kasvaa merkittävästi. \citep[.]{wald04} \\
+Rakennettaessa kd-puuta on otettava kantaa, mitä tehdään monikulmioille, jotka ulottuvat avaruuden jakavan tason molemmille puolille. Sekä monikulmion jakaminen osiin, että sen sisällyttäminen useaan solmuun kasvattavat kd-puuta turhaan. kd-puusta saatava hyöty on suurin silloin, kun avaruusjakoja on tehty mahdollisimman paljon ja lehtisolmuissa on mahdollisimman vähän monikulmioita. Tällöin todennäköisyys sille, että monikulmioita jää jakotasojen molemmin puolin on suuri ja tietorakenteen vaatima tallennustila voi kasvaa merkittävästi. \citep[.]{wald04} \\
 
-BVH:ta muodostettaessa ei synny samankaltaista ongelmaa kuin kd-puiden kanssa, sillä monikulmio voi kuulua vain yhteen objektiin ja objektin rajaava tila sisältää kaikki sen monikulmiot. Myös BVH-puu kannattaa muodostaa syväksi. Jos BVH sisältäisi vain koko maiseman kattavan juuren, jonka lapsina olisi kaikkien objektien rajaavat tilat, ei tietorakenteen tuoma hyöty olisi paras mahdollinen. Puuhun kannattaa siis sijoittaa useita rajaavia tiloja, jotka sisältävät useita objekteja. Objektijoukon jakaminen kahtia BVH:n jokaisella tasolla vaikuttaa olevan hyvä valinta. \citep[.]{goldsmith} \\
+BVH:ta muodostettaessa ei synny samankaltaista ongelmaa kuin kd-puiden kanssa, sillä monikulmio voi kuulua vain yhteen objektiin ja objektin rajaava tila sisältää kaikki sen monikulmiot. Myös BVH-puu kannattaa muodostaa syväksi. Jos BVH sisältäisi vain koko maiseman kattavan juuren, jonka lapsina olisi kaikkien objektien rajaavat tilat, ei tietorakenteen tuoma hyöty olisi paras mahdollinen. Puuhun kannattaa siis sijoittaa useita rajaavia tiloja, jotka sisältävät useita objekteja. Objektijoukon jakaminen kahtia BVH:n jokaisella tasolla vaikuttaa olevan hyvä valinta. \citep[.]{goldsmith} Ingo Waldin tekemässä tutkimuksessa BVH:n muodostaminen onnistui jopa 10 kertaa nopeammin kuin kd-puun. Tämä johtuu muun muassa kd-puun alustamisessa esiintyvistä, jakotason leikkaavista monikulmioista. \citep[.]{wald07}  \\
 
 Kuten aikaisemmin mainittu, avaruusjakorakenteen tuoma hyöty riippuu siitä, miten hyvin avaruuden ositus on onnistunut. Sekä kd-puun, että BVH:n alustamisessa voidaan hyödyntää samankaltaista hintafunktiota, jolla voidaan minimoida puun läpikäymisen viemä aika. Hintafunktiota voidaan kuvata seuraavasti: olkoon alipuussa $N$ monikulmiota, jotka peittävät alueen $V$. Tämä alipuu jaetaan osiin $L$ ja $R$, joissa on $N_L$ ja $N_R$ monikulmiota, jotka peittävät alueen $V_L$ ja $V_R$. Tällöin alipuun läpikäymisen hinta on\\
 
@@ -260,9 +273,7 @@ Kuten aikaisemmin mainittu, avaruusjakorakenteen tuoma hyöty riippuu siitä, mi
 $Hinta(V\to\{L,R\}) = K_T + K_I \left(\dfrac{A(V_L)}{A(V)}N_L + \dfrac{A(V_R)}{A(V)}N_R \right)$,\\
 \vspace{0.2cm}
 \end{centering}
-missä $A(V_i)$ on alueen $V_i$ pinta-ala, ja arvot $K_T$ ja $K_I$ ovat puun läpikäynnistä ja säde-monikulmio-yhteentörmäystesteistä johtuvia vakioita. Minimoimalla tämä funktio puun alustuksen jokaisessa vaiheessa, saadaan muodostettua tehokas avaruuden jako. \citep[.]{wald07}\\
-
-Edellä mainittua, hintafunktiota käyttävää tekniikkaa kutsutaan \emph{pinta-alaheuristiikaksi} (engl. \emph{Surface Area Heuristics}) ja sillä saadaan muodostettua hyvä avaruuden ositus sekä kd-puulle, että BVH:lle. Ingo Waldin tekemässä tutkimuksessa BVH:n muodostaminen onnistui jopa 10 kertaa nopeammin kuin kd-puun. Tämä johtuu muun muassa kd-puun alustamisessa esiintyvistä, jakotason leikkaavista monikulmioista. \citep[.]{wald07}  
+missä $A(V_i)$ on alueen $V_i$ pinta-ala, ja arvot $K_T$ ja $K_I$ ovat puun läpikäynnistä ja säde-monikulmio-yhteentörmäystesteistä johtuvia vakioita. Minimoimalla tämä funktio puun alustuksen jokaisessa vaiheessa, saadaan muodostettua tehokas avaruuden jako. \citep[.]{wald07} Tällä \emph{pinta-alaheuristiikaksi} (engl. \emph{surface area heuristics}) kutsutulla tekniikalla saadaan muodostettua hyvä avaruuden ositus sekä kd-puulle, että BVH:lle. 
 
 %BVH:n muodostaminen maisemasta vie vain n. 30\% enemmän tilaa. golds
 
@@ -278,25 +289,25 @@ Vlastimil Havran vertaili väitöskirjassaan eri tietorakenteita säteenseuranna
 
 Niels Thrane ja Lars Simonsen vertailivat pro gradu -työssään eri avaruusjakorakenteita grafiikkaprosessoreilla suoritetussa säteenseurannassa. Koska säteenseurannassa jokainen säde on riippumaton muista, voidaan säteenseuranta-algoritmi suorittaa helposti rinnakkaislaskentana. Tämä onnistuu grafiikkaprosessoreilta erittäin nopeasti. Toisin kuin Havranin testeissä, Thranen ja Simonsenin vertailussa BVH:n käytöllä saatiin yhdeksänkertainen nopeutus kd-puuhun verrattuna. \citep[.]{thrane}\\  
 
-Yksiselitteisesti ei voida siis osoittaa, mikä avaruusjakoon perustuvista tietorakenteista soveltuisi parhaiten säteenseurannan nopeuttamiseen. Asymptoottisesti avaruusjakopuiden käyttö säteenseurassa vähentää tarvittavien yhteentörmäystestien määrää luokasta $O(n)$ keskimäärin luokkaan $O(\log n)$, riippumatta käytetystä tietorakenteesta. Tulokset hahmontamisen nopeudessa voivat vaihdella käytännössä eri maisemien, implementaatioiden, laitteistojen ja sovelluksien välillä. \citep[.]{wald04} \\
+Tutkimustulokset ovat siis ristiriitaisia ja yksiselitteisesti ei voida osoittaa, mikä avaruusjakoon perustuvista tietorakenteista soveltuisi parhaiten säteenseurannan nopeuttamiseen. Tulokset hahmontamisen nopeudessa vaihtelevat käytännössä eri maisemien, implementaatioiden, laitteistojen ja sovelluksien välillä. \citep[.]{wald04}  Asymptoottisesti avaruusjakopuiden käyttö säteenseurassa kuitenkin vähentää yhtä sädettä kohtaan suoritettavien säde-monikulmio-yhteentörmäystestien määrää luokasta $O(n)$ keskimäärin luokkaan $O(\log n)$, riippumatta käytetystä tietorakenteesta. \\
 
 \newpage
-\section{Muita nopeutuskeinoja}
+\section{Katsaus tulevaisuuteen}
 \subsection{Reaaliaikainen säteenseuranta}
 
 Kuten luvussa 2.2 mainittiin, nopeaa hahmontamista vaativiin sovelluksiin käytetään yleensä rasterointitekniikkaa. Säteenseuranta on kuitenkin ylivoimainen hahmontamistekniikka johtuen sen kyvystä mallintaa realistista valon liikettä ja heijastumista. Reaaliaikaista säteenseurantaa on pitkään pidetty mahdottomana, sillä se vaatii vähintään 30 kuvan hahmontamista sekunnissa, jottei ihmissilmä erottaisi yksittäisiä kuvia. Tähän sisältyy jokaista pikseliä vastaavan säteen ampuminen, yhteentörmäysten etsiminen, varjostus ja kuvan tulostaminen ruudulle. \\
 
-Ingo Wald osoittaa väitöskirjassaan staattisille maisemille suoritetun reaaliaikaisen säteenseurannan olevan mahdollista hyvin muodostetun avaruusjakotietorakenteen ja lukuisten muiden optimointien avulla \citep{wald04}. Jos objektit liikkuvat hahmonnettaessa reaaliaikaisesti maisemaa, joudutaan avaruusjakorakennetta muokkaamaan kuvien välissä. Wald ja Havran ovat näyttäneet artikkelissaan, että uutta maisemaa vastaava kd-puu voidaan muodostaa ajassa $O(n \log n)$, missä $n$ on monikulmioiden määrä \citep{wald06}. Tämä ei kuitenkaan ole tarpeeksi nopeaa. Wald et al. on myös esittänyt käytettäväksi topologialtaan staattista BVH:ta, jonka rajaavien tilojen koordinaatteja muutetaan objektien liikkuessa \citep{wald}. Vaikka tulokset ovat olleet lupaavia, on reaaliaikaiseen, liikkuvien maisemien hahmontamiseen säteenseurannalla vielä matkaa. 
+Ingo Wald osoittaa väitöskirjassaan staattisille maisemille suoritetun reaaliaikaisen säteenseurannan olevan mahdollista hyvin muodostetun avaruusjakotietorakenteen ja lukuisten muiden optimointien avulla \citep{wald04}. Jos objektit liikkuvat hahmonnettaessa maisemaa reaaliaikaisesti, joudutaan avaruusjakorakennetta muokkaamaan kuvien välissä. Wald ja Havran ovat näyttäneet artikkelissaan, että uutta maisemaa vastaava kd-puu voidaan muodostaa ajassa $O(n \log n)$, missä $n$ on monikulmioiden määrä \citep{wald06}. Tämä ei kuitenkaan ole tarpeeksi nopeaa. Wald et al. on myös esittänyt käytettäväksi topologialtaan staattista BVH:ta, jonka rajaavien tilojen koordinaatteja muutetaan objektien liikkuessa \citep{wald}. Vaikka tulokset ovat olleet lupaavia, on reaaliaikaiseen, liikkuvien maisemien hahmontamiseen säteenseurannalla vielä matkaa. 
 
 \subsection{Joitakin optimointitekniikoita}
 
-Monimutkaisen maiseman reaaliaikainen hahmontaminen vaatii toki muitakin optimointitekniikoita kuin avaruusjakorakenteet onnistuakseen kuluttajahintaisella laitteistolla. Luodaan lopuksi katsaus muutamaan tekniikkaan.\\
+Monimutkaisen maiseman reaaliaikainen hahmontaminen vaatii toki muitakin optimointitekniikoita kuin avaruusjakorakenteet ja grafiikkaprosessorien tarjoaman tehokkaan rinnakkaisuuden onnistuakseen kuluttajahintaisella laitteistolla. Luodaan lopuksi katsaus muutamaan tekniikkaan.\\
 
-Säteenseurannassa säde $\vec{R}$ voi osua useaan monikulmioon, mutta kiinnostuneita ollaan vain kameraa lähinnä olevasta leikkauspisteestä. Jos avaruuden osat eli vokselit on esiprosessointivaiheessa järjestetty kasvavaan järjestykseen suhteessa niiden etäisyyteen kamerasta, voidaan säteen ja monikulmioiden leikkauspisteiden etsintä lopettaa heti ensimmäisen leikkauksen löytyessä (engl. \emph{Early Ray Termination}). Tämä tekniikka vaatii kuitenkin enemmän laskentaa esiprosessointivaiheessa. \citep{wald04}\\
+Säteenseurannassa säde $\vec{R}$ voi osua useaan monikulmioon, mutta kiinnostuneita ollaan vain kameraa lähinnä olevasta leikkauspisteestä. Jos avaruuden osat eli vokselit on esiprosessointivaiheessa järjestetty kasvavaan järjestykseen suhteessa niiden etäisyyteen kamerasta, voidaan säteen ja monikulmioiden leikkauspisteiden etsintä lopettaa heti ensimmäisen leikkauksen löytyessä (engl. \emph{early ray termination}). Tämä tekniikka vaatii kuitenkin enemmän laskentaa esiprosessointivaiheessa. \citep[.]{wald04}\\
 
 Pullonkaulaksi säteenseurannassa voi muodostua monikulmioiden ja muun datan hakeminen keskusmuistista. Datan hakeminen cache-muistista on moninkertaisesti nopeampaa kuin keskusmuistista, joten usein tarvittua dataa, kuten säde-monikulmio-yhteentörmäystesteihin vaadittuja laskutoimituksia, olisi hyvä hakea cache-muistiin etukäteen ja pitää se siellä niin kauan kuin tarvitaan. Tämä vaatii erittäin matalan tason optimointia. \citep[.]{wald01}\\
 
-Toinen tapa välttää muistihausta aiheutuvaa latenssia on ampua maisemaan yksittäisten säteiden sijaan niin sanottuja \emph{sädepaketteja} (engl. \emph{Ray Packets}). Monet nykyaikaiset prosessorit tukevat SIMD-komentoja (\emph{Single Instruction, Multiple Data}), joiden avulla voidaan suorittaa laskutoimituksia samanaikaisesti kaikille paketin säteille. \citep[.]{wald01}\\
+Toinen tapa välttää muistihausta aiheutuvaa latenssia on ampua maisemaan yksittäisten säteiden sijaan niin sanottuja \emph{sädepaketteja} (engl. \emph{ray packets}). Monet nykyaikaiset prosessorit tukevat SIMD-komentoja (\emph{Single Instruction, Multiple Data}), joiden avulla voidaan suorittaa laskutoimituksia samanaikaisesti kaikille paketin säteille. \citep[.]{wald01}\\
 
  
 %Eräs tapa vähentää säde-monikulmio-yhteentörmäystestien määrää on pitää yllä potentiaalisesti näkyvistä monikulmioista muodostuvaa joukkoa. 
@@ -309,7 +320,7 @@ Toinen tapa välttää muistihausta aiheutuvaa latenssia on ampua maisemaan yksi
 \section{Yhteenveto}
 
 %säteenseuranta, sen hyvyys ja sen hitaus
-Kolmiulotteisten kuvien hahmontaminen on tärkeä tutkimuskohde ja viihdeteollisuuden ala. Tässä tutkielmassa on esitelty säteenseurannaksi kutsuttu hahmontamistekniikka, jolla pystytään luoda erittäin realistisia, kolmiulotteisesta maisemasta muodostettuja kuvia. Säteenseuranta-algoritmi ampuu virtuaalisesta kamerasta valon kulkua mallintavia säteitä geometrisesti määriteltyyn maisemaan ja selvittää, mitkä maiseman objektit näkyvät kameraan ja minkä värisinä. Säteenseuranta on laskennollisesti erittäin raskasta, joten sen nopeuttamista on tutkittu paljon.    \\
+Kolmiulotteisten kuvien hahmontaminen on tärkeä tutkimuskohde ja viihdeteollisuuden ala. Tässä tutkielmassa on esitelty säteenseurannaksi kutsuttu hahmontamistekniikka, jolla pystytään luomaan erittäin realistisia, kolmiulotteisesta maisemasta muodostettuja kuvia. Säteenseuranta-algoritmi ampuu virtuaalisesta kamerasta valon kulkua mallintavia säteitä geometrisesti määriteltyyn maisemaan ja selvittää, mitkä maiseman objektit näkyvät kameraan ja minkä värisinä. Säteenseuranta on laskennollisesti erittäin raskasta, joten sen nopeuttamista on tutkittu paljon.    \\
 
 %siirretään työtä esiprosessointivaiheeseen, avaruusjako ja objektien järjestely
 Suosittu tapa optimoida säteenseuranta-algoritmia on luoda esiprosessointivaiheessa maisemasta hierarkinen tietorakenne. Avaruutta voidaan jakaa osiin tilan suhteen muodostamalla siitä esimerkiksi BSP- tai kd-puu. Toinen tapa on ryhmitellä maiseman objekteja yhteen, ja muodostaa niiden rajaavista tiloista hierarkinen puurakenne, BVH. Näiden tietorakenteiden avulla laskentatyötä saadaan siirrettyä itse hahmontamisvaiheesta esiprosessointivaiheeseen.\\
@@ -321,10 +332,8 @@ Avaruuden jakaminen tulee suorittaa huolellisesti, jotta esiprosessointivaiheess
 Eri tutkimuksissa on saatu ristiriitaisia tuloksia siitä, mikä tietorakenne olisi tehokkain säteenseurannan nopeuttamiseen. Voidaan kuitenkin sanoa kd-puun ja BVH:n olevan soveltuvia tähän tarkoitukseen ja yhdistettynä grafiikkaprosessorien tarjoamaan tehokkaaseen rinnakkaisuuteen ja muihin optimointitekniikoihin, niillä voidaan saavuttaa reaaliaikaiseen hahmontamiseen vaadittava nopeus. Säteenseuranta tulee todennäköisesti tuomaan erittäin realistista grafiikkaa myös sovelluksiin, jotka on aiemmin hahmonnettu rasterointitekniikalla, esimerkiksi videopeleihin. \\
 
 
-%hughes sivulla 1102 on hyvä yhteenveto
-
 \clearpage
-\bibliographystyle{apalike-finnish} %apalike-finnish
+\bibliographystyle{apalike} %apalike-finnish
 \bibliography{bibliography}
 \clearpage
 %\listofalgorithms
